@@ -22,7 +22,8 @@
           function(response) {
             var div = document.createElement("div");
             var para = document.createElement("p");
-            var arrKeys = Object.keys(response);
+            var text = JSON.parse(response);
+            var arrKeys = Object.keys(text);
             console.log(arrKeys);
             var node = document.createTextNode(arrKeys.toString());
             para.appendChild(node);

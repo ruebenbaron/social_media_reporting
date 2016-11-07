@@ -5,6 +5,68 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css" />
   </head>
   <body>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '339440106419025',
+          xfbml      : true,
+          version    : 'v2.8'
+        });
+        
+        var access_token = "EAACEdEose0cBALbAg5Mjsxu0xegoIZCiAZATxRieCdGSA4cAQUjqrM2vOwB66g5nE8c0RWleCNKrpH7QQdZAgdd5zXIQr0iNqZCzlrW9ZCqcRyON9BZApnvdEqGZCQBaKfne7jERUb7oDZCFZAbWErPghZAZBUD77YZBfWHu2WUQnQCKOAZDZD"
+        var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
+        
+        for (i=0;i<wettbewerber.length;i++){
+          var focus = wettbewerber[i];
+          FB.api(
+            '/posts',
+            'GET',
+            {"ids":focus,"fields":"message,likes.limit(0).summary(true)","since":"2016-10-01","until":"2016-11-01", "access_token":access_token},
+            function(response) {
+              var text = JSON.stringify(response);
+              text = JSON.parse(text);
+              var div = document.createElement("div");
+              div.id = focus;
+              var para = document.createElement("p");
+              var node = document.createTextNode("Anzahl Posts im letzten Monat: " + text[focus].data.length);
+              para.appendChild(node);
+              var head = document.createElement("h1");
+              var node = document.createTextNode(focus);
+              head.appendChild(node);
+              var element = document.getElementById("results");
+              element.appendChild(div);
+              div.appendChild(head);
+              div.appendChild(para);
+
+              FB.api(
+                '/',
+                'GET',
+                {"ids":focus,"fields":"fan_count", "access_token": access_token},
+                function(response) {
+                  var text = JSON.stringify(response);
+                  text = JSON.parse(text);
+                  var para = document.createElement("p");
+                  var node = document.createTextNode("Anzahl Fans: " + text[focus].fan_count);
+                  para.appendChild(node);
+                  div.appendChild(para);
+                }
+              );
+            }
+          );
+        };
+        
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+
     <div id="results">
       
     </div>

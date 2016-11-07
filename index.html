@@ -22,9 +22,7 @@
           function(response) {
             var div = document.createElement("div");
             var para = document.createElement("p");
-            var obj = JSON.stringify(response);
-            obj = JSON.parse(obj);
-            var node = document.createTextNode(obj.vwfsde.data.length.toString());
+            var node = document.createTextNode("ABC");
             para.appendChild(node);
             var results = document.getElementById("results");
             div.appendChild(para);

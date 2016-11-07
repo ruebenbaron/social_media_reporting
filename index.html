@@ -20,9 +20,10 @@
           'GET',
           {"ids":"vwfsde,mercedesbenzbank,ingdiba","fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01"},
           function(response) {
+            var obj = JSON.parse(response);
             var div = document.createElement("div");
             var para = document.createElement("p");
-            var node = document.createTextNode("ABC");
+            var node = document.createTextNode(Object.keys(obj));
             var results = document.getElementById("results");
             
             para.appendChild(node);

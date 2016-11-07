@@ -23,7 +23,7 @@
             var div = document.createElement("div");
             var para = document.createElement("p");
             var arrKeys = Object.keys(response);
-            var node = document.createTextNode(arrKeys[0].toString());
+            var node = document.createTextNode(arrKeys.toString());
             para.appendChild(node);
             var results = document.getElementById("results");
             div.appendChild(para);

@@ -25,9 +25,9 @@
             var node = document.createTextNode("ABC");
             var results = document.getElementById("results");
             
-            results.appendChild(div);
-            div.appendChild(para);
             para.appendChild(node);
+            div.appendChild(para);
+            results.appendChild(div);
           }
         );
       };

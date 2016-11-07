@@ -22,10 +22,13 @@
           function(response) {
             var div = document.createElement("div");
             var para = document.createElement("p");
-            var node = document.createTextNode(response);
+            for (key in response) {
+              var node = document.createTextNode(key);
+              para.appendChild(node);
+            };
             var results = document.getElementById("results");
             
-            para.appendChild(node);
+            
             div.appendChild(para);
             results.appendChild(div);
           }

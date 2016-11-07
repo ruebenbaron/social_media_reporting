@@ -15,6 +15,21 @@
         
         var access_token = "EAACEdEose0cBALbAg5Mjsxu0xegoIZCiAZATxRieCdGSA4cAQUjqrM2vOwB66g5nE8c0RWleCNKrpH7QQdZAgdd5zXIQr0iNqZCzlrW9ZCqcRyON9BZApnvdEqGZCQBaKfne7jERUb7oDZCFZAbWErPghZAZBUD77YZBfWHu2WUQnQCKOAZDZD"
         
+        FB.api(
+          '/posts',
+          'GET',
+          {"ids":"vwfsde,mercedesbenzbank,ingdiba","fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01"},
+          function(response) {
+            var div = document.createElement("div");
+            var para = document.createElement("p");
+            var node = document.createTextNode(Object.keys[0]);
+            var results = document.getElementById("results");
+            
+            results.appendChild(div);
+            div.appendChild(para);
+            para.appendChild(node);
+          }
+        );
       };
 
       (function(d, s, id){

@@ -22,7 +22,8 @@
           function(response) {
             var div = document.createElement("div");
             var para = document.createElement("p");
-            var node = document.createTextNode(response.vwfsde.data.length.toString());
+            var obj = JSON.parse(response);
+            var node = document.createTextNode(obj.vwfsde.data.length.toString());
             para.appendChild(node);
             var results = document.getElementById("results");
             div.appendChild(para);

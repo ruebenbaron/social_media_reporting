@@ -22,10 +22,11 @@
           function(response) {
             var div = document.createElement("div");
             var para = document.createElement("p");
-            for (key in Object.keys(response)) {
-                 
-              var node = document.createTextNode(key);
-              para.appendChild(node + "/br");
+            for (key in response) {
+              if (response.hasOwnProperty(key)) {   
+                var node = document.createTextNode(key);
+                para.appendChild(node + "/br");
+              };
             };
             var results = document.getElementById("results");
             

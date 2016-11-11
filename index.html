@@ -72,6 +72,7 @@
           divPost.className = "fb-post";
           divPost.setAttribute("data-href", post_permalink_url);
           divPage.appendChild(divPost);
+          FB.XFBML.parse(divPost);
         }
         
         function appendPostInfo(page_name, post_id) {
@@ -119,7 +120,6 @@
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);
         };
-        FB.XFBML.parse();
           
       };
 

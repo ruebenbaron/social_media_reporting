@@ -75,11 +75,13 @@
                 var likes_count_2 = posts[i+1].likes.summary.total_count;
                 if (likes_count_1 > likes_count_2) {
                   var mostSuccessfulPostID = posts[i].id;
+                  var likes_count = likes_count_1;
                 } else {
                   var mostSuccessfulPostID = posts[i+1].id;
+                  var likes_count = likes_count_2;
                 };
               };
-              appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID);
+              appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + "(" + likes_count + " likes)");
             }
           );
         }

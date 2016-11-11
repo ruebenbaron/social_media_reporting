@@ -101,6 +101,15 @@
           );
         }
         
+        function appendEmbeddedPost(page_name, post_id) {
+          var postURL = "https://www.facebook.com/" + page_name + "/posts/" + post_id + "/";
+          var divPage = document.getElementById(page_name);
+          var divPost = document.createElement("div");
+          divPost.className = "fb-post";
+          divPost.setAttribute("data-href", postURL);
+          divPage.appendChild(divPost);
+        }
+        
         for (i = 0; i < wettbewerber.length; i++) {
           createPageDiv(wettbewerber[i]);
           appendHeader(wettbewerber[i], wettbewerber[i]);

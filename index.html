@@ -65,25 +65,28 @@
           );
         }
         
-        function appendDateOfPost(page_name, post_id) {
-          FB.api(
-            '/' + post_id,
-            'GET',
-            {"access_token":access_token},
-            function(response) {
-                var dateOfPost = response.created_time;
-                appendParagraph(page_name, "Created on: " + dateOfPost);
-            }
-          );
-        }
-        
-        function appendEmbeddedPost(page_name, post_id) {
-          var postURL = "https://www.facebook.com/" + page_name + "/posts/" + post_id + "/";
+         
+        function appendEmbeddedPost(page_name, post_permalink_url) {
+          var postURL = "https://www.facebook.com/" + page_name + "/posts/" + post_permalink_url + "/";
           var divPage = document.getElementById(page_name);
           var divPost = document.createElement("div");
           divPost.className = "fb-post";
           divPost.setAttribute("data-href", postURL);
           divPage.appendChild(divPost);
+        }
+        
+        function appendPostInfo(page_name, post_id) {
+          FB.api(
+            '/' + post_id,
+            'GET',
+            {"fields":"message,created_time,permalink_url","access_token":access_token},
+            function(response) {
+                var post_date = response.created_time;
+                var post_permalink_url = response.permalink_url;
+                appendParagraph(page_name, "Created on: " + post_date);
+                appendEmbeddedPost(page_name, post_permalink_url);
+            }
+          );
         }
         
         function appendMostSuccessfulPost(page_name) {
@@ -105,7 +108,7 @@
                 };
               };
               appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
-              appendDateOfPost(page_name, mostSuccessfulPostID);
+              appendPostInfo(page_name, mostSuccessfulPostID);
               appendEmbeddedPost(page_name, mostSuccessfulPostID);
             }
           );

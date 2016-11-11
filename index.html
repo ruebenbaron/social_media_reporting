@@ -123,6 +123,12 @@
         };
           
       };
+      
+      document.getElementById("ParseButton").onclick = function() {FBParse(){}};
+      
+      function FBParse() {
+        FB.XFBML.parse();
+      }
 
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
@@ -137,5 +143,6 @@
     <div id="results">
       
     </div>
+    <button id="ParseButton" onclick=FBParse()>Click</button>
   </body>
 </html>

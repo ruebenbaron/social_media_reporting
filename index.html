@@ -22,9 +22,7 @@
             'GET',
             {"fields":"fan_count", "access_token":access_token},
             function(response) {
-              var text = JSON.stringify(response);
-              var obj = JSON.parse(text);
-              return obj.fan_count;
+              console.log(response.fan_count);
             }
           );
         }
@@ -35,9 +33,7 @@
             'GET',
             {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
             function(response) {
-              var text = JSON.stringify(response);
-              var obj = JSON.parse(text);
-              return obj.data.length;
+              console.log(obj.data.length);
             }
           );
         }
@@ -68,11 +64,8 @@
           div.id = page_name;
           divResults.appendChild(div);
         }
-        console.log(getFanCount("mercedesbenzbank"));
-        console.log(getPostCount("mercedesbenzbank"));
-        createPageDiv(wettbewerber[0]);
-        appendFanCount(wettbewerber[0]);
-        appendPostCount(wettbewerber[0]);
+        getFanCount("mercedesbenzbank");
+        getPostCount("mercedesbenzbank");
         
       };
 

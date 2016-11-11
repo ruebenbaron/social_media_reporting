@@ -15,7 +15,7 @@
           version    : 'v2.8'
         });
         var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
-        var access_token = ""
+        var access_token = "EAACEdEose0cBADoCtgTiYpJ89kD7rLLh5C6LZB9OfuEIYhXLUsOTtDZA6zoisW8W9kUPW4Uh12AdQ4jXpuQHBgsrqjez87El84ZC8QkQ8AYosGEQDnYIxMWAS04oXd6DL74YNyNTPlE9SZCq9rXDLNGMNKl14MJRbReofqGpowZDZD"
         var sinceDate = "2016-10-01";
         var untilDate = "2016-11-01";
         
@@ -115,19 +115,15 @@
           );
         }
         
-        function checkLoginState() {
-          FB.getLoginStatus(function(response){
-            if (response.status === "connected") {
-              access_token = response.authResponse.accessToken;
-              for (i = 0; i < wettbewerber.length; i++) {
-                createPageDiv(wettbewerber[i]);
-                appendHeader(wettbewerber[i], wettbewerber[i]);
-                appendFanCount(wettbewerber[i]);
-                appendPostCount(wettbewerber[i]);
-                appendMostSuccessfulPost(wettbewerber[i]);
-              };
-            };
-          });
+        
+        for (i = 0; i < wettbewerber.length; i++) {
+          createPageDiv(wettbewerber[i]);
+          appendHeader(wettbewerber[i], wettbewerber[i]);
+          appendFanCount(wettbewerber[i]);
+          appendPostCount(wettbewerber[i]);
+          appendMostSuccessfulPost(wettbewerber[i]);
+        };
+
           
         };
           

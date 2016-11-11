@@ -71,7 +71,6 @@
           var divPost = document.createElement("div");
           divPost.className = "fb-post";
           divPost.setAttribute("data-href", post_permalink_url);
-          FB.XFBML.parse(divPost);
           divPage.appendChild(divPost);
         }
         
@@ -119,6 +118,7 @@
           appendFanCount(wettbewerber[i]);
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);
+          FB.XFBML.parse();
         }
           
       };

@@ -41,7 +41,9 @@
         function appendFanCount(page_name) {
           var div = document.getElementById(page_name);
           var para = document.createElement("p");
-          var node = document.createTextNode("Fan Count: " + getFanCount(page_name).toString());
+          var fan_count = getFanCount(page_name);
+          fan_count = fan_count.toString();
+          var node = document.createTextNode("Fan Count: " + fan_count);
           para.appendChild(node);
           div.appendChild(para);
         }
@@ -49,7 +51,9 @@
         function appendPostCount(page_name) {
           var div = document.getElementById(page_name);
           var para = document.createElement("p");
-          var node = document.createTextNode("Post Count last month: " + getPostCount(page_name).toString());
+          var post_count = getPostCount(page_name);
+          post_count = post_count.toString();
+          var node = document.createTextNode("Post Count last month: " + post_count);
           para.appendChild(node);
           div.appendChild(para);
         }

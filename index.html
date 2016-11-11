@@ -66,13 +66,14 @@
         }
         
          
-        function appendEmbeddedPost(page_name, post_permalink_url) {
+        function appendEmbeddedPost(page_name, post_permalink_url, post_id) {
           var divPage = document.getElementById(page_name);
           var divPost = document.createElement("div");
           divPost.className = "fb-post";
+          divPost.id = post_id;
           divPost.setAttribute("data-href", post_permalink_url);
           divPage.appendChild(divPost);
-          FB.XFBML.parse(divPost);
+          FB.XFBML.parse(document.getElementById(post_id));
         }
         
         function appendPostInfo(page_name, post_id) {
@@ -84,7 +85,7 @@
                 var post_date = response.created_time;
                 var post_permalink_url = response.permalink_url;
                 appendParagraph(page_name, "Created on: " + post_date);
-                appendEmbeddedPost(page_name, post_permalink_url);
+                appendEmbeddedPost(page_name, post_permalink_url, post_id);
             }
           );
         }

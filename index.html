@@ -15,7 +15,9 @@
         });
         var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
         var access_token = "EAACEdEose0cBAG3I1Cd5nIQqZAvhPWYtCRKjQhZBnrUz6LvZBwZB2Gis3YLaSTVHF7hIeqp7iKl2Oxqb1ZAYlWyT3VCyLCeTtkpq1gADbsG2WoYbZAZCxXWiyzhQoxT8TWZBuQx5S7QMpIZCKCQbGXgOLhZBZB2btWQaLfYF6bmX8fzIQZDZD"
-
+        var sinceDate = "2016-10-01";
+        var untilDate = "2016-11-01";
+        
         function createPageDiv(page_name) {
           var divResults = document.getElementById("results");
           var div = document.createElement("div");
@@ -55,7 +57,7 @@
           FB.api(
             '/' + page_name + '/posts',
             'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
+            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate,"access_token":access_token},
             function(response) {
               var post_count = response.data.length;
               appendParagraph(page_name, "Post Count: " + post_count.toString());
@@ -79,7 +81,7 @@
           FB.api(
             '/' + page_name + '/posts',
             'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
+            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate,"access_token":access_token},
             function(response) {
               var posts = response.data;
               for (i=0; i<(posts.length-1);i++) {

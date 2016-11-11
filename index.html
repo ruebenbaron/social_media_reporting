@@ -63,6 +63,18 @@
           );
         }
         
+        function appendDateOfPost(page_name, post_id) {
+          FB.api(
+            '/' + post_id,
+            'GET',
+            {},
+            function(response) {
+                var dateOfPost = response.created_time;
+                appendParagraph(page_name, "Created on: " + dateOfPost);
+            }
+          );
+        }
+        
         function appendMostSuccessfulPost(page_name) {
           FB.api(
             '/' + page_name + '/posts',
@@ -92,6 +104,7 @@
           appendFanCount(wettbewerber[i]);
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);
+          appendDateOfPost(wettbewerber[i]);
         }
           
       };

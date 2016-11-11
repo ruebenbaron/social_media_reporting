@@ -22,7 +22,9 @@
             'GET',
             {"fields":"fan_count", "access_token":access_token},
             function(response) {
-                return response.fan_count;
+              var text = JSON.stringify(response);
+              var obj = JSON.parse(text);
+              return obj.fan_count;
             }
           );
         }
@@ -33,7 +35,9 @@
             'GET',
             {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
             function(response) {
-                return response.data.length;
+              var text = JSON.stringify(response);
+              var obj = JSON.parse(text);
+              return obj.data.length;
             }
           );
         }

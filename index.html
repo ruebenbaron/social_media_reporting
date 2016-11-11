@@ -67,11 +67,10 @@
         
          
         function appendEmbeddedPost(page_name, post_permalink_url) {
-          var postURL = "https://www.facebook.com/" + page_name + "/posts/" + post_permalink_url + "/";
           var divPage = document.getElementById(page_name);
           var divPost = document.createElement("div");
           divPost.className = "fb-post";
-          divPost.setAttribute("data-href", postURL);
+          divPost.setAttribute("data-href", post_permalink_url);
           divPage.appendChild(divPost);
         }
         

@@ -70,7 +70,6 @@
             {"access_token":access_token},
             function(response) {
                 var dateOfPost = response.created_time;
-                console.log(response);
                 appendParagraph(page_name, "Created on: " + dateOfPost);
             }
           );

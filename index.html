@@ -109,7 +109,7 @@
                   var likes_count = likes_count_2;
                 };
               };
-              appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
+              //appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
               appendPostInfo(page_name, mostSuccessfulPostID);
             }
           );
@@ -124,9 +124,7 @@
         };
         
         $(document).ready(function() {
-          $('button').click(function(){
-            FB.XFBML.parse();
-          });
+          FB.XFBML.parse();
         });
           
       };
@@ -146,6 +144,5 @@
     <div id="results">
       
     </div>
-    <button id="ParseButton">Click</button>
   </body>
 </html>

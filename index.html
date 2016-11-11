@@ -73,7 +73,7 @@
           divPost.id = post_id;
           divPost.setAttribute("data-href", post_permalink_url);
           divPage.appendChild(divPost);
-          FB.XFBML.parse(document.getElementById(post_id));
+          FB.XFBML.parse(divPost);
         }
         
         function appendPostInfo(page_name, post_id) {

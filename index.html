@@ -53,7 +53,6 @@
             }
           );
         }
-
         function appendPostCount(page_name) {
           FB.api(
             '/' + page_name + '/posts',
@@ -123,22 +122,17 @@
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);
         };
-        
+          
+          
         $(document).ready(function(){
           $('button').click(function(){
             FB.XFBML.parse();
           });
         });
-
-          
-        };
-          
         
-      
       };
       
       
-
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];
          if (d.getElementById(id)) {return;}

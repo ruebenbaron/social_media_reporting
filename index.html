@@ -33,7 +33,7 @@
             'GET',
             {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
             function(response) {
-              console.log(obj.data.length);
+              console.log(response.data.length);
             }
           );
         }

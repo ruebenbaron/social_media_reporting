@@ -15,7 +15,6 @@
           version    : 'v2.8'
         });
         var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
-        var access_token = "EAACEdEose0cBAA7pz9KlcKXBMuRn05th7GbMZAr9VlM7NzZBf0LLS8vzNmuszTTXFyZBZAaho8WlCQTzpZAmixFTQgw4c74mDyAvTR3neqvsTsZAPmZAzcv2Mdvjfj7oXsiU9VgImjdIGRCNZBv8dweYuwhjjnB2WkiMlMpiJrKpLQZDZD"
         var sinceDate = "2016-10-01";
         var untilDate = "2016-11-01";
         
@@ -46,7 +45,7 @@
           FB.api(
             '/' + page_name,
             'GET',
-            {"fields":"fan_count", "access_token":access_token},
+            {"fields":"fan_count"},
             function(response) {
               var fan_count = response.fan_count;
               appendParagraph(page_name, "Fan Count: " + fan_count.toString());
@@ -58,7 +57,7 @@
           FB.api(
             '/' + page_name + '/posts',
             'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate,"access_token":access_token},
+            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate},
             function(response) {
               var post_count = response.data.length;
               appendParagraph(page_name, "Post Count: " + post_count.toString());
@@ -81,7 +80,7 @@
           FB.api(
             '/' + post_id,
             'GET',
-            {"fields":"message,created_time,permalink_url","access_token":access_token},
+            {"fields":"message,created_time,permalink_url"},
             function(response) {
                 var post_date = response.created_time;
                 var post_permalink_url = response.permalink_url;
@@ -95,7 +94,7 @@
           FB.api(
             '/' + page_name + '/posts',
             'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate,"access_token":access_token},
+            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate},
             function(response) {
               var posts = response.data;
               for (i=0; i<(posts.length-1);i++) {

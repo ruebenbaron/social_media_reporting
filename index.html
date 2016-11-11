@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Reporting Oktober 2016</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
     <script>
@@ -122,11 +123,11 @@
           appendMostSuccessfulPost(wettbewerber[i]);
         };
         
-        function FBParse() {
-          FB.XFBML.parse(document.getElementById('some_element'), function() {
-              alert('I rendered');
+        $(document).ready(function() {
+          $('button').click(function(){
+            FB.XFBML.parse();
           });
-        }
+        });
           
       };
       
@@ -145,6 +146,6 @@
     <div id="results">
       
     </div>
-    <button id="ParseButton" onclick="FBParse()">Click</button>
+    <button id="ParseButton">Click</button>
   </body>
 </html>

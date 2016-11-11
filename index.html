@@ -46,7 +46,7 @@
             {"fields":"fan_count", "access_token":access_token},
             function(response) {
               var fan_count = response.fan_count;
-              appendParagraph("mercedesbenzbank", "Fan Count: " + fan_count.toString());
+              appendParagraph(page_name, "Fan Count: " + fan_count.toString());
             }
           );
         }
@@ -58,7 +58,7 @@
             {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
             function(response) {
               var post_count = response.data.length;
-              appendParagraph("mercedesbenzbank", "Post Count: " + post_count.toString());
+              appendParagraph(page_name, "Post Count: " + post_count.toString());
             }
           );
         }

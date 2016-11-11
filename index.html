@@ -67,7 +67,7 @@
           FB.api(
             '/' + post_id,
             'GET',
-            {},
+            {"access_token":access_token},
             function(response) {
                 var dateOfPost = response.created_time;
                 console.log(response);

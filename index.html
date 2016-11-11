@@ -123,7 +123,9 @@
         };
         
         function FBParse() {
-          FB.XFBML.parse();
+          FB.XFBML.parse(document.getElementById('some_element'), function() {
+              alert('I rendered');
+          });
         }
           
       };

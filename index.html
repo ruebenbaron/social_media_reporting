@@ -63,11 +63,33 @@
           );
         }
         
+        function appendMostSuccessfulPost(page_name) {
+          FB.api(
+            '/' + page_name + '/posts',
+            'GET',
+            {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
+            function(response) {
+              var posts = response.data;
+              for (i=0; i<(posts.length-1);i++) {
+                var likes_count_1 = posts[i].likes.summary.total_count;
+                var likes_count_2 = posts[i+1].likes.summary.total_count;
+                if (likes_count_1 > likes_count_2) {
+                  var mostSuccessfulPostID = posts[i].id;
+                } else {
+                  var mostSuccessfulPostID = posts[i+1].id;
+                };
+              };
+              appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID.toString());
+            }
+          );
+        }
+        
         for (i = 0; i < wettbewerber.length; i++) {
           createPageDiv(wettbewerber[i]);
           appendHeader(wettbewerber[i], "Page: " + wettbewerber[i]);
           appendFanCount(wettbewerber[i]);
           appendPostCount(wettbewerber[i]);
+          appendMostSuccessfulPost(wettbewerber[i]);
         }
           
       };

@@ -6,6 +6,50 @@
   </head>
   <body>
     <script>
+      function getFanCount(page_name) {
+        FB.api(
+          '/' + page_name,
+          'GET',
+          {"fields":"fan_count"},
+          function(response) {
+              return response.fan_count;
+          }
+        );
+      }
+      
+      function getPostCount(page_name) {
+        FB.api(
+          '/' + page_name + '/posts',
+          'GET',
+          {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01"},
+          function(response) {
+              return response.data.length;
+          }
+        );
+      }
+      
+      function appendFanCount(page_name) {
+        var div = document.getElementById(page_name);
+        var para = document.createElement("p");
+        var node = document.createTextNode("Fan Count: " + getFanCount(page_name).toString());
+        para.appendChild(node);
+        div.appendChild(para);
+      }
+      
+      function appendPostCount(page_name) {
+        var div = document.getElementById(page_name);
+        var para = document.createElement("p");
+        var node = document.createTextNode("Post Count last month: " + getPostCount(page_name).toString());
+        para.appendChild(node);
+        div.appendChild(para);
+      }
+      
+      function createPageDiv(page_name) {
+        var divResults = document.getElementById("results");
+        var div = document.createElement("div");
+        div.Id = page_name;
+      }
+      
       window.fbAsyncInit = function() {
         FB.init({
           appId      : '339440106419025',
@@ -13,22 +57,13 @@
           version    : 'v2.8'
         });
         
-        var access_token = "EAACEdEose0cBALbAg5Mjsxu0xegoIZCiAZATxRieCdGSA4cAQUjqrM2vOwB66g5nE8c0RWleCNKrpH7QQdZAgdd5zXIQr0iNqZCzlrW9ZCqcRyON9BZApnvdEqGZCQBaKfne7jERUb7oDZCFZAbWErPghZAZBUD77YZBfWHu2WUQnQCKOAZDZD"
+        var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
+        var access_token = "EAACEdEose0cBAIIKoQUE72xCLE77ZBehGoC5K5ZAF6qq806dbRfgUDitMbfX6ZClZCGgd6Klid8cw1dIxbwgOqqj7ZAB5MzbfGmjI1ZCPfJzmWiDK5nZA5eWpK0HR2BQVBn3rEH6MsUNqGqZCIBXy3aMQy2ZB3ZBdlUSkTsR9utIq1HgZDZD"
         
-        FB.api(
-          '/posts',
-          'GET',
-          {"ids":"vwfsde","fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01"},
-          function(response) {
-            var div = document.createElement("div");
-            var para = document.createElement("p");
-            var node = document.createTextNode("ABC");
-            para.appendChild(node);
-            var results = document.getElementById("results");
-            div.appendChild(para);
-            results.appendChild(div);
-          }
-        );
+        createPageDiv(wettbewerber[0]);
+        appendFanCount(wettbewerber[0]);
+        appendPostCount(wettbewerber[0]);
+        
       };
 
       (function(d, s, id){

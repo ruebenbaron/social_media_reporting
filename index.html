@@ -23,6 +23,14 @@
           divResults.appendChild(div);
         }
         
+        function appendHeader(page_name, data) {
+          var div = document.getElementById(page_name);
+          var head = document.createElement("h1");
+          var node = document.createTextNode(data);
+          head.appendChild(node);
+          div.appendChild(head);
+        }
+        
         function appendParagraph(page_name, data) {
           var div = document.getElementById(page_name);
           var para = document.createElement("p");
@@ -56,7 +64,7 @@
         }
 
         createPageDiv("mercedesbenzbank");
-        
+        appendHeader("mercedesbenzbank");
         appendFanCount("mercedesbenzbank");
         appendPostCount("mercedesbenzbank");
         

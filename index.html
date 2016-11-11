@@ -70,6 +70,7 @@
             {},
             function(response) {
                 var dateOfPost = response.created_time;
+                console.log(dateOfPost);
                 appendParagraph(page_name, "Created on: " + dateOfPost);
             }
           );
@@ -101,7 +102,7 @@
         
         for (i = 0; i < wettbewerber.length; i++) {
           createPageDiv(wettbewerber[i]);
-          appendHeader(wettbewerber[i], "Page: " + wettbewerber[i]);
+          appendHeader(wettbewerber[i], wettbewerber[i]);
           appendFanCount(wettbewerber[i]);
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);

@@ -121,14 +121,14 @@
           appendPostCount(wettbewerber[i]);
           appendMostSuccessfulPost(wettbewerber[i]);
         };
+        
+        function FBParse() {
+          FB.XFBML.parse();
+        }
           
       };
       
-      document.getElementById("ParseButton").onclick = function() {FBParse(){}};
       
-      function FBParse() {
-        FB.XFBML.parse();
-      }
 
       (function(d, s, id){
          var js, fjs = d.getElementsByTagName(s)[0];

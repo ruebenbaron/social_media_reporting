@@ -62,12 +62,14 @@
             }
           );
         }
-
-        createPageDiv(wettbewerber[0]);
-        appendHeader(wettbewerber[0], "Page: " + wettbewerber[0]);
-        appendFanCount(wettbewerber[0]);
-        appendPostCount(wettbewerber[0]);
         
+        for (i = 0; i < wettbewerber.length; i++) {
+          createPageDiv(wettbewerber[i]);
+          appendHeader(wettbewerber[i], "Page: " + wettbewerber[i]);
+          appendFanCount(wettbewerber[i]);
+          appendPostCount(wettbewerber[i]);
+        }
+          
       };
 
       (function(d, s, id){

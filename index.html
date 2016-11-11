@@ -16,56 +16,49 @@
         var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
         var access_token = "EAACEdEose0cBALEEfswBMsbUy7vPbQTtNXMeKOCSvKFKAcZCgnPcFGoZCPDK85AIN5HFJpRTpwyfatYzQC5L4sqnpQVwRI2M9dmHZBzGH7wX1qOCciGw5y7oa69IwEy1QJVZBHpZBU2To7zp3tAYoHsnIupXBmIDXKofWJaH1UAZDZD"
 
-        function getFanCount(page_name) {
-          FB.api(
-            '/' + page_name,
-            'GET',
-            {"fields":"fan_count", "access_token":access_token},
-            function(response) {
-              console.log(response.fan_count);
-            }
-          );
-        }
-
-        function getPostCount(page_name) {
-          FB.api(
-            '/' + page_name + '/posts',
-            'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
-            function(response) {
-              console.log(response.data.length);
-            }
-          );
-        }
-
-        function appendFanCount(page_name) {
-          var div = document.getElementById(page_name);
-          var para = document.createElement("p");
-          var fan_count = getFanCount(page_name);
-          fan_count = fan_count.toString();
-          var node = document.createTextNode("Fan Count: " + fan_count);
-          para.appendChild(node);
-          div.appendChild(para);
-        }
-
-        function appendPostCount(page_name) {
-          var div = document.getElementById(page_name);
-          var para = document.createElement("p");
-          var post_count = getPostCount(page_name);
-          post_count = post_count.toString();
-          var node = document.createTextNode("Post Count last month: " + post_count);
-          para.appendChild(node);
-          div.appendChild(para);
-        }
-
         function createPageDiv(page_name) {
           var divResults = document.getElementById("results");
           var div = document.createElement("div");
           div.id = page_name;
           divResults.appendChild(div);
         }
-        getFanCount("mercedesbenzbank");
-        getPostCount("mercedesbenzbank");
+        
+        function appendParagraph(page_name, data) {
+          var div = document.getElementById(page_name);
+          var para = document.createElement("p");
+          var node = document.createTextNode(data);
+          para.appendChild(node);
+          div.appendChild(para);
+        }
+        
+        function appendFanCount(page_name) {
+          FB.api(
+            '/' + page_name,
+            'GET',
+            {"fields":"fan_count", "access_token":access_token},
+            function(response) {
+              var fan_count = response.fan_count;
+              appendParagraph("mercedesbenzbank", "Fan Count: " + fan_count.toString());
+            }
+          );
+        }
+
+        function appendPostCount(page_name) {
+          FB.api(
+            '/' + page_name + '/posts',
+            'GET',
+            {"fields":"message,likes.limit(0).summary(1)","since":"2016-09-01","until":"2016-10-01","access_token":access_token},
+            function(response) {
+              var post_count = response.data.length;
+              appendParagraph("mercedesbenzbank", "Post Count: " + post_count.toString());
+            }
+          );
+        }
+
+        createPageDiv("mercedesbenzbank");
+        
+        appendFanCount("mercedesbenzbank");
+        appendPostCount("mercedesbenzbank");
         
       };
 

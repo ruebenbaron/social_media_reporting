@@ -15,7 +15,7 @@ $(document).ready(function(){
   function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
     var rounded = Math.round(value * multiplier) / multiplier;
-    rounded = rounded.replace(/,/g, '.')
+    //rounded = rounded.replace(/,/g, '.')
     return rounded.toFixed(precision);
   }
   
@@ -235,8 +235,8 @@ $(document).ready(function(){
         };
         var avg_likes = sum_likes/sum_posts;
         var rounded_avg_likes = round(avg_likes, 1);
-        //var rounded_avg_likes_with_dots = numberWithDots(rounded_avg_likes);
-        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes;
+        var rounded_avg_likes_with_dots = numberWithDots(rounded_avg_likes);
+        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes_with_dots;
       }
     );
   }

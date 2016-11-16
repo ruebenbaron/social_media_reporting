@@ -244,7 +244,7 @@ $(document).ready(function(){
     FB.api(
       '/'+page_name+'/posts',
       'GET',
-      {"fields":"reactions.limit(0).summary(1),shares,comments.limit(0).summary(1)","since":sinceDate,"until":untilDate},
+      {"fields":"reactions.limit(0).summary(1),shares,comments.limit(0).summary(1)","since":sinceDate,"until":untilDate,"access_token":access_token},
       function(response) {
         var shares = 0;
         var reactions = 0;
@@ -258,7 +258,7 @@ $(document).ready(function(){
         FB.api(
           '/'+page_name,
           'GET',
-          {"fields":"fan_count"},
+          {"fields":"fan_count","access_token":access_token},
           function(response) {
             var fan_count = response.fan_count;
             var avg_engagement = engagement/fan_count;

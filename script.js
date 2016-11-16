@@ -242,7 +242,7 @@ $(document).ready(function(){
   
   function fillAvg_Engagement_Rate_per_Post(page_name, tableData){
     FB.api(
-      '/vwfsde/posts',
+      '/'+page_name+'/posts',
       'GET',
       {"fields":"reactions.limit(0).summary(1),shares,comments.limit(0).summary(1)","since":sinceDate,"until":untilDate},
       function(response) {

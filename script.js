@@ -240,6 +240,24 @@ $(document).ready(function(){
     );
   }
   
+  function fillAvg_Engagement_Rate_per_Post(page_name, tableData){
+    FB.api(
+      '/vwfsde/posts',
+      'GET',
+      {"fields":"reactions.limit(0).summary(1),shares,comments.limit(0).summary(1)","since":sinceDate,"until":untilDate},
+      function(response) {
+        var shares = response.data.shares.count;
+        var reactions = response.data.reactions.summary.total_count;
+        var comments = response.data.comments.summary.total_count;
+        var engagement = shares + reactions + comments;
+        var fan_count = tableData[page_name].Fans;
+        var avg_engagement = engagement/fan_count;
+        var avg_engagement_rounded_perc = round(avg_engagement*100, 2);
+        tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc + "%";
+      }
+    );
+  }
+  
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
   
@@ -286,6 +304,7 @@ $(document).ready(function(){
                 fillPosts_Count(wettbewerber[i], tableData);
                 fillMost_Successful_Post_Likes(wettbewerber[i], tableData);
                 fillAvg_Likes_per_Post(wettbewerber[i], tableData);
+                fillAvg_Engagement_Rate_per_Post(wettbewerber[i], tableData)
               };
             }
           });

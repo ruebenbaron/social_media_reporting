@@ -15,8 +15,15 @@ $(document).ready(function(){
   function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
     var rounded = Math.round(value * multiplier) / multiplier;
-    rounded = rounded.toFixed(precision);
-    return rounded;
+    return rounded.toFixed(precision);
+  }
+  
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  
+  function numberWithDots(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
   
   function createTable(container, wettbewerber, kriterien) {
@@ -95,7 +102,7 @@ $(document).ready(function(){
       'GET',
       {"fields":"fan_count", "access_token":access_token},
       function(response) {
-        var fan_count = response.fan_count;
+        var fan_count = numberWithCommas(response.fan_count);
         appendParagraph(page_name, "Fan Count: " + fan_count.toString());
       }
     );
@@ -154,7 +161,7 @@ $(document).ready(function(){
             var likes_count = likes_count_2;
           };
         };
-        appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
+        appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + numberWithCommas(likes_count) + " likes)");
         appendPostInfo(page_name, mostSuccessfulPostID);
       }
     );
@@ -171,7 +178,7 @@ $(document).ready(function(){
       {"fields":"fan_count", "access_token":access_token},
       function(response) {
         var fan_count = response.fan_count;
-        tableData[page_name].Fans.innerHTML = fan_count;
+        tableData[page_name].Fans.innerHTML = numberWithCommas(fan_count);
       }
     );
   }
@@ -183,11 +190,11 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts_count = response.data.length;
-        tableData[page_name].Posts_Count.innerHTML = posts_count;
+        tableData[page_name].Posts_Count.innerHTML = numberWithCommas(posts_count);
       }
     );
   }
-
+  
   function fillMost_Successful_Post_Likes(page_name, tableData){
     FB.api(
       '/' + page_name + '/posts',
@@ -206,10 +213,12 @@ $(document).ready(function(){
             var likes_count = likes_count_2;
           };
         };
-        tableData[page_name].Most_Successful_Post_Likes.innerHTML = likes_count;
+        tableData[page_name].Most_Successful_Post_Likes.innerHTML = numberWithCommas(likes_count);
       }
     );
   }
+  
+  
   
   function fillAvg_Likes_per_Post(page_name, tableData){
     FB.api(
@@ -225,7 +234,8 @@ $(document).ready(function(){
         };
         var avg_likes = sum_likes/sum_posts;
         var rounded_avg_likes = round(avg_likes, 1);
-        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes;
+        var rounded_avg_likes_with_commas = numberWithCommas(rounded_avg_likes);
+        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes_with_commas;
       }
     );
   }

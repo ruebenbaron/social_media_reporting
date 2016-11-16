@@ -3,7 +3,7 @@ $(document).ready(function(){
   //Variablen:
   var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
   var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_ Engagement_Rate_per_Post"];
-  var access_token = "EAACEdEose0cBAIbx5AYmshLUH2lKG4BEgGtSpGU0ZAhkV8kiXAXHq9CGv3PfHKQCDvfdFruDNmDGixPxu1UKmExULYhzNu6LmQDnFzOf1pAUdAtioRGHDry8WEZC45VCZANzQZB1HSQC6j7R5hWP0W7ZA340cy8FqZATLcWVZBqUAZDZD"
+  var access_token = "";
   var d_since = new Date();
   //since Date = current Date - 30 days.
   d_since.setDate(d_since.getDate()-30);
@@ -18,17 +18,6 @@ $(document).ready(function(){
     rounded = rounded.toFixed(precision);
     rounded = rounded.replace(/./g, ',')
     return rounded;
-  }
-  
-  function numberWithDots(x) {
-    var string = x.toString();
-    if (string.indexOf(",")>0) {
-      var parts = string.split(",");
-      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      return parts.join(".");
-    } else {
-      string.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
   }
   
   function createTable(container, wettbewerber, kriterien) {
@@ -108,8 +97,7 @@ $(document).ready(function(){
       {"fields":"fan_count", "access_token":access_token},
       function(response) {
         var fan_count = response.fan_count;
-        var fan_count_with_dots = numberWithDots(fan_count);
-        appendParagraph(page_name, "Fan Count: " + fan_count_with_dots.toString());
+        appendParagraph(page_name, "Fan Count: " + fan_count.toString());
       }
     );
   }
@@ -120,8 +108,7 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var post_count = response.data.length;
-        var post_count_with_dots = numberWithDots(post_count_with_dots);
-        appendParagraph(page_name, "Post Count: " + post_count_with_dots.toString());
+        appendParagraph(page_name, "Post Count: " + post_count.toString());
       }
     );
   }
@@ -168,7 +155,6 @@ $(document).ready(function(){
             var likes_count = likes_count_2;
           };
         };
-        var likes_count_with_dots = numberWithDots(likes_count);
         appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
         appendPostInfo(page_name, mostSuccessfulPostID);
       }
@@ -186,8 +172,7 @@ $(document).ready(function(){
       {"fields":"fan_count", "access_token":access_token},
       function(response) {
         var fan_count = response.fan_count;
-        var fan_count_with_dots = numberWithDots(fan_count);
-        tableData[page_name].Fans.innerHTML = fan_count_with_dots;
+        tableData[page_name].Fans.innerHTML = fan_count;
       }
     );
   }
@@ -199,12 +184,11 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts_count = response.data.length;
-        var posts_count_with_dots = numberWithDots(posts_count);
-        tableData[page_name].Posts_Count.innerHTML = posts_count_with_dots;
+        tableData[page_name].Posts_Count.innerHTML = posts_count;
       }
     );
   }
-  
+
   function fillMost_Successful_Post_Likes(page_name, tableData){
     FB.api(
       '/' + page_name + '/posts',
@@ -223,8 +207,7 @@ $(document).ready(function(){
             var likes_count = likes_count_2;
           };
         };
-        var likes_count_with_dots = numberWithDots(likes_count);
-        tableData[page_name].Most_Successful_Post_Likes.innerHTML = likes_count_with_dots;
+        tableData[page_name].Most_Successful_Post_Likes.innerHTML = likes_count;
       }
     );
   }
@@ -243,8 +226,7 @@ $(document).ready(function(){
         };
         var avg_likes = sum_likes/sum_posts;
         var rounded_avg_likes = round(avg_likes, 1);
-        var rounded_avg_likes_with_dots = numberWithDots(rounded_avg_likes);
-        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes_with_dots;
+        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes;
       }
     );
   }

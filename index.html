@@ -6,168 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Reporting Oktober 2016</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <style>
-      .navbar-brand {
-        padding: 0px;
-      }
-      .navbar-brand>img {
-        height: 100%;
-        padding: 15px;
-        width: auto;
-      }
-    </style>
+    <link rel="stylesheet" href="stylesheet.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   </head>
   <body>
-    <script>
-      
-      
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '339440106419025',
-          xfbml      : true,
-          version    : 'v2.8'
-        });
-        var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
-        var access_token = "EAACEdEose0cBADoCtgTiYpJ89kD7rLLh5C6LZB9OfuEIYhXLUsOTtDZA6zoisW8W9kUPW4Uh12AdQ4jXpuQHBgsrqjez87El84ZC8QkQ8AYosGEQDnYIxMWAS04oXd6DL74YNyNTPlE9SZCq9rXDLNGMNKl14MJRbReofqGpowZDZD"
-        var sinceDate = "2016-10-01";
-        var untilDate = "2016-11-01";
-        
-        function createPageDiv(page_name) {
-          var divResults = document.getElementById("results");
-          var div = document.createElement("div");
-          div.id = page_name;
-          divResults.appendChild(div);
-        }
-        
-        function appendHeader(page_name, data) {
-          var div = document.getElementById(page_name);
-          var head = document.createElement("h1");
-          var node = document.createTextNode(data);
-          head.appendChild(node);
-          div.appendChild(head);
-        }
-        
-        function appendParagraph(page_name, data) {
-          var div = document.getElementById(page_name);
-          var para = document.createElement("p");
-          var node = document.createTextNode(data);
-          para.appendChild(node);
-          div.appendChild(para);
-        }
-        
-        function appendFanCount(page_name) {
-          FB.api(
-            '/' + page_name,
-            'GET',
-            {"fields":"fan_count", "access_token":access_token},
-            function(response) {
-              var fan_count = response.fan_count;
-              appendParagraph(page_name, "Fan Count: " + fan_count.toString());
-            }
-          );
-        }
-        function appendPostCount(page_name) {
-          FB.api(
-            '/' + page_name + '/posts',
-            'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
-            function(response) {
-              var post_count = response.data.length;
-              appendParagraph(page_name, "Post Count: " + post_count.toString());
-            }
-          );
-        }
-        
-         
-        function appendEmbeddedPost(page_name, post_permalink_url, post_id) {
-          var divPage = document.getElementById(page_name);
-          var divPost = document.createElement("div");
-          divPost.className = "fb-post";
-          divPost.id = post_id;
-          divPost.setAttribute("data-href", post_permalink_url);
-          divPage.appendChild(divPost);
-          FB.XFBML.parse(divPost);
-        }
-        
-        function appendPostInfo(page_name, post_id) {
-          FB.api(
-            '/' + post_id,
-            'GET',
-            {"fields":"message,created_time,permalink_url", "access_token":access_token},
-            function(response) {
-                var post_date = response.created_time;
-                var post_permalink_url = response.permalink_url;
-                appendParagraph(page_name, "Created on: " + post_date);
-                appendEmbeddedPost(page_name, post_permalink_url, post_id);
-            }
-          );
-        }
-        
-        function appendMostSuccessfulPost(page_name) {
-          FB.api(
-            '/' + page_name + '/posts',
-            'GET',
-            {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
-            function(response) {
-              var posts = response.data;
-              for (i=0; i<(posts.length-1);i++) {
-                var likes_count_1 = posts[i].likes.summary.total_count;
-                var likes_count_2 = posts[i+1].likes.summary.total_count;
-                if (likes_count_1 > likes_count_2) {
-                  var mostSuccessfulPostID = posts[i].id;
-                  var likes_count = likes_count_1;
-                } else {
-                  var mostSuccessfulPostID = posts[i+1].id;
-                  var likes_count = likes_count_2;
-                };
-              };
-              appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + likes_count + " likes)");
-              appendPostInfo(page_name, mostSuccessfulPostID);
-            }
-          );
-        }
-        
-        
-        for (i = 0; i < wettbewerber.length; i++) {
-          createPageDiv(wettbewerber[i]);
-          appendHeader(wettbewerber[i], wettbewerber[i]);
-          appendFanCount(wettbewerber[i]);
-          appendPostCount(wettbewerber[i]);
-          appendMostSuccessfulPost(wettbewerber[i]);
-        };
-          
-          
-        $(document).ready(function(){
-          $('#ParseButton').click(function(){
-            FB.XFBML.parse();
-          });
-        });
-        
-      };
-      
-      
-      (function(d, s, id){
-         var js, fjs = d.getElementsByTagName(s)[0];
-         if (d.getElementById(id)) {return;}
-         js = d.createElement(s); js.id = id;
-         js.src = "//connect.facebook.net/en_US/sdk.js";
-         fjs.parentNode.insertBefore(js, fjs);
-       }(document, 'script', 'facebook-jssdk'));
-    </script>
-    <div class="container-fluid">
-      <nav class="navbar navbar-default">
-        <div class="container">
-          <div class="navbar-header">
-            <a class="navbar-brand" href="#"><img src="dashboard_icon.svg"></a>
-          </div>
-        </div>
-      </nav>
-      <button id="ParseButton">Facebook Plugins aktivieren</button>
-
-      <div id="results">
-
+    <script src="script.js"></script>
+    <div class="container">
+      <div class="container" id="loginContainer">
+        <div class="btn btn-info" id="fb-login">Facebook Login</div>
+        <div id="loginStatus">Not logged in.</div>
       </div>
+      <div class="container" id="containerTable"></div>
+      <div class="container" id="details"></div>
+      <div class="btn btn-default" id="btnDetails"></div>
     </div>
   </body>
 </html>

@@ -316,7 +316,7 @@ $(document).ready(function(){
                 fillPosts_Count(wettbewerber[i], tableData);
                 fillMost_Successful_Post_Likes(wettbewerber[i], tableData);
                 fillAvg_Likes_per_Post(wettbewerber[i], tableData);
-                fillAvg_Engagement_Rate_per_Post(wettbewerber[i], tableData)
+                fillAvg_Engagement_Rate_per_Post(wettbewerber[i], tableData);
               };
             }
           });

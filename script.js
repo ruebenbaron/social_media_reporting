@@ -235,8 +235,8 @@ $(document).ready(function(){
         };
         var avg_likes = sum_likes/sum_posts;
         var rounded_avg_likes = round(avg_likes, 1);
-        var rounded_avg_likes_with_dots = numberWithDots(rounded_avg_likes);
-        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes_with_dots;
+        //var rounded_avg_likes_with_dots = numberWithDots(rounded_avg_likes);
+        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes;
       }
     );
   }

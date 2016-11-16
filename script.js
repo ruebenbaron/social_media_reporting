@@ -246,14 +246,19 @@ $(document).ready(function(){
       'GET',
       {"fields":"reactions.limit(0).summary(1),shares,comments.limit(0).summary(1)","since":sinceDate,"until":untilDate},
       function(response) {
-        var shares = response.data.shares.count;
-        var reactions = response.data.reactions.summary.total_count;
-        var comments = response.data.comments.summary.total_count;
+        var shares = 0;
+        var reactions = 0;
+        var comments = 0;
+        for (i=0;i<response.data.length;i++){
+          shares += response.data[i].shares.count;
+          reactions += response.data[i].reactions.summary.total_count;
+          comments += response.data[i].comments.summary.total_count;
+        }
         var engagement = shares + reactions + comments;
         var fan_count = tableData[page_name].Fans;
         var avg_engagement = engagement/fan_count;
         var avg_engagement_rounded_perc = round(avg_engagement*100, 2);
-        tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc + "%";
+        tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc.toString() + "%";
       }
     );
   }

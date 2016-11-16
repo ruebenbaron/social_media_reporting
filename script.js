@@ -21,9 +21,14 @@ $(document).ready(function(){
   }
   
   function numberWithDots(x) {
-    var parts = x.toString().split(",");
-    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    return parts.join(".");
+    var string = x.toString();
+    if (string.indexOf(",")>0) {
+      var parts = string.split(",");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return parts.join(".");
+    } else {
+      string.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
   }
   
   function createTable(container, wettbewerber, kriterien) {

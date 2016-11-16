@@ -16,7 +16,6 @@ $(document).ready(function(){
     var multiplier = Math.pow(10, precision || 0);
     var rounded = Math.round(value * multiplier) / multiplier;
     rounded = rounded.toFixed(precision);
-    rounded = rounded.replace(/./g, ',')
     return rounded;
   }
   

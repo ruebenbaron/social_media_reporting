@@ -3,7 +3,7 @@ $(document).ready(function(){
   //Variablen:
   var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
   var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_ Engagement_Rate_per_Post"];
-  var access_token = "EAACEdEose0cBAFb1pb9OGZCkv5uM27xq0RDO1DlXryhpLy6ZC8UXvVHJHCZCxWZAywAbyJZBMMokKBAbOSjibb5lV1ZB57OWYHruY4YRnM90ZC7AtL9Cu9HTZCN8P0Te2XCLC1OZAVR2cvfYwjHnFsNQHydMTn3ZCRFZCRLGZBf4KYNzKAZDZD"
+  var access_token = "EAACEdEose0cBAIbx5AYmshLUH2lKG4BEgGtSpGU0ZAhkV8kiXAXHq9CGv3PfHKQCDvfdFruDNmDGixPxu1UKmExULYhzNu6LmQDnFzOf1pAUdAtioRGHDry8WEZC45VCZANzQZB1HSQC6j7R5hWP0W7ZA340cy8FqZATLcWVZBqUAZDZD"
   var d_since = new Date();
   //since Date = current Date - 30 days.
   d_since.setDate(d_since.getDate()-30);
@@ -12,7 +12,6 @@ $(document).ready(function(){
   var untilDate = d_until.toISOString();
   
   //Funktionen:
-  
   function createTable(container, wettbewerber, kriterien) {
     var containerTable = document.getElementById(container);
     var table = document.createElement("table");

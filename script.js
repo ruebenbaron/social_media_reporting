@@ -215,6 +215,7 @@ $(document).ready(function(){
       version    : 'v2.8'
     });
 
+    /*
     for (i = 0; i < wettbewerber.length; i++) {
       createPageDiv(wettbewerber[i]);
       appendHeader(wettbewerber[i], wettbewerber[i]);
@@ -226,6 +227,7 @@ $(document).ready(function(){
       fillPosts_Count(wettbewerber[i], tableData);
       fillMost_Successful_Post_Likes(wettbewerber[i], tableData);
     };
+    */
     
     var btnDetails = $("#btnDetails");
     var divDetails = $("#details");
@@ -247,7 +249,6 @@ $(document).ready(function(){
         if (response.status === 'connected') {
           // Logged into your app and Facebook.
           loginStatus.text("Succesfully logged in.");
-          /*
           FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
               console.log(response.authResponse.accessToken);
@@ -265,7 +266,6 @@ $(document).ready(function(){
               };
             }
           });
-          */
         } else if (response.status === 'not_authorized') {
           // The person is logged into Facebook, but not your app.
           loginStatus.text("Please login to the app.");

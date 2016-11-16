@@ -1,0 +1,39 @@
+.container {
+	margin: 20px 0px;
+}
+
+.container#loginContainer {
+  padding: 0px;
+}
+
+#details, #hideDetails {
+  display: none;
+}
+
+#containerTable {
+	padding: 0px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+th {
+  text-align: center;
+}
+
+.number {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.fb-post span, .fb-post iframe {
+  min-width: 700px !important;
+  max-width: 1000px !important;
+  min-height: 700px !important;
+  max-height: 1000px !important;
+}

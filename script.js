@@ -15,8 +15,9 @@ $(document).ready(function(){
   function round(value, precision) {
     var multiplier = Math.pow(10, precision || 0);
     var rounded = Math.round(value * multiplier) / multiplier;
-    //rounded = rounded.replace(/./g, ',')
-    return rounded.toFixed(precision);
+    rounded = rounded.toFixed(precision);
+    rounded = rounded.replace(/./g, ',')
+    return rounded;
   }
   
   function numberWithDots(x) {

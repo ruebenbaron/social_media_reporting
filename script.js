@@ -255,10 +255,17 @@ $(document).ready(function(){
           comments += response.data[i].comments.summary.total_count;
         }
         var engagement = shares + reactions + comments;
-        var fan_count = tableData[page_name].Fans;
-        var avg_engagement = engagement/fan_count;
-        var avg_engagement_rounded_perc = round(avg_engagement*100, 2);
-        tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc.toString() + "%";
+        FB.api(
+          '/'+page_name,
+          'GET',
+          {"fields":"fan_count"},
+          function(response) {
+            var fan_count = response.fan_count;
+            var avg_engagement = engagement/fan_count;
+            var avg_engagement_rounded_perc = round(avg_engagement*100, 2);
+            tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc.toString() + "%";
+          }
+        );
       }
     );
   }

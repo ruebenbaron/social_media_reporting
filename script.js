@@ -204,6 +204,31 @@ $(document).ready(function(){
     );
   }
   
+  function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    var rounded = Math.round(value * multiplier) / multiplier;
+    return rounded.toFixed(precision);
+  }
+  
+  function fillAvg_Likes_per_Post(page_name, tableData){
+    FB.api(
+      '/' + page_name + '/posts',
+      'GET',
+      {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
+      function(response) {
+        var posts = response.data;
+        var sum_likes = 0;
+        var sum_posts = posts.length;
+        for (i=0; i<sum_posts;i++) {
+          sum_likes += posts[i].likes.summary.total_count;
+        };
+        var avg_likes = sum_likes/sum_posts;
+        var rounded_avg_likes = round(avg_likes, 1);
+        tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes;
+      }
+    );
+  }
+  
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
   
@@ -215,20 +240,6 @@ $(document).ready(function(){
       version    : 'v2.8'
     });
 
-    /*
-    for (i = 0; i < wettbewerber.length; i++) {
-      createPageDiv(wettbewerber[i]);
-      appendHeader(wettbewerber[i], wettbewerber[i]);
-      appendFanCount(wettbewerber[i]);
-      appendPostCount(wettbewerber[i]);
-      appendMostSuccessfulPost(wettbewerber[i]);
-      fillPage(wettbewerber[i], tableData);
-      fillFanCount(wettbewerber[i], tableData);
-      fillPosts_Count(wettbewerber[i], tableData);
-      fillMost_Successful_Post_Likes(wettbewerber[i], tableData);
-    };
-    */
-    
     var btnDetails = $("#btnDetails");
     var divDetails = $("#details");
     btnDetails.text("Show Details");
@@ -263,6 +274,7 @@ $(document).ready(function(){
                 fillFanCount(wettbewerber[i], tableData);
                 fillPosts_Count(wettbewerber[i], tableData);
                 fillMost_Successful_Post_Likes(wettbewerber[i], tableData);
+                fillAvg_Likes_per_Post(wettbewerber[i], tableData);
               };
             }
           });

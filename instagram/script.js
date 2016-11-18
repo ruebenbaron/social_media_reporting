@@ -10,7 +10,7 @@ $(document).ready(function(){
       client_secret: "f441a6c8cea8423892ddec594d7eba95", 
       grant_type: "authorization_code", 
       redirect_uri: "https://ruebenbaron.github.io/social_media_reporting/instagram/index.html", 
-      "code": code
+      code: code
     }, function(data){
       access_token = data.access_token;
       console.log(access_token);

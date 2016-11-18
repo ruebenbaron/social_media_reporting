@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   //Variablen:
-  var wettbewerber = ["mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
+  var wettbewerber = ["vwfsde","mercedesbenzbank","ingdiba", "targobank", "comdirect", "fidorbank", "deutsche.kreditbank", "consorsbank", "commerzbank", "deutschebank", "ally", "barclaysUK"];
   var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
   var access_token = "";
   var d_since = new Date();
@@ -82,7 +82,7 @@ $(document).ready(function(){
 
   function appendHeader(page_name, data) {
     var div = document.getElementById(page_name);
-    var head = document.createElement("h1");
+    var head = document.createElement("h2");
     var node = document.createTextNode(data);
     head.appendChild(node);
     div.appendChild(head);
@@ -150,18 +150,18 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
-        for (i=0; i<(posts.length-1);i++) {
-          var likes_count_1 = posts[i].likes.summary.total_count;
-          var likes_count_2 = posts[i+1].likes.summary.total_count;
-          if (likes_count_1 > likes_count_2) {
-            var mostSuccessfulPostID = posts[i].id;
-            var likes_count = likes_count_1;
-          } else {
-            var mostSuccessfulPostID = posts[i+1].id;
-            var likes_count = likes_count_2;
+        //First champion is the latest post:
+        var likes_count_champion = posts[0].likes.summary.total_count;
+        var mostSuccessfulPostID = posts[0].id;
+        //Compare succeeding posts to first post:
+        for (i=1; i<posts.length;i++){
+          var likes_count_challenger = posts[i].likes.summary.total_count;
+          if (likes_count_challenger > likes_count_champion){
+            likes_count_champion = likes_count_challenger;
+            mostSuccessfulPostID = posts[i].id;
           };
         };
-        appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + numberWithCommas(likes_count) + " likes)");
+        appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + numberWithCommas(likes_count_champion) + " likes)");
         appendPostInfo(page_name, mostSuccessfulPostID);
       }
     );
@@ -202,18 +202,19 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
-        for (i=0; i<(posts.length-1);i++) {
-          var likes_count_1 = posts[i].likes.summary.total_count;
-          var likes_count_2 = posts[i+1].likes.summary.total_count;
-          if (likes_count_1 > likes_count_2) {
-            var mostSuccessfulPostID = posts[i].id;
-            var likes_count = likes_count_1;
-          } else {
-            var mostSuccessfulPostID = posts[i+1].id;
-            var likes_count = likes_count_2;
+        //First champion is the latest post:
+        var likes_count_champion = posts[0].likes.summary.total_count;
+        var mostSuccessfulPostID = posts[0].id;
+        //Compare succeeding posts to first post:
+        for (i=1; i<posts.length;i++){
+          var likes_count_challenger = posts[i].likes.summary.total_count;
+          if (likes_count_challenger > likes_count_champion){
+            likes_count_champion = likes_count_challenger;
+            mostSuccessfulPostID = posts[i].id;
           };
         };
-        tableData[page_name].Most_Successful_Post_Likes.innerHTML = numberWithCommas(likes_count);
+        //Fill Table:
+        tableData[page_name].Most_Successful_Post_Likes.innerHTML = numberWithCommas(likes_count_champion);
       }
     );
   }
@@ -249,21 +250,30 @@ $(document).ready(function(){
         var shares = 0;
         var reactions = 0;
         var comments = 0;
-        for (i=0;i<response.data.length;i++){
-          shares += response.data[i].shares.count;
-          reactions += response.data[i].reactions.summary.total_count;
-          comments += response.data[i].comments.summary.total_count;
+        var posts = response.data;
+        for (i=0;i<posts.length;i++){
+          if (posts[i].hasOwnProperty("shares")){
+            shares += posts[i].shares.count;
+          };
+          if (posts[i].hasOwnProperty("reactions")){
+            reactions += posts[i].reactions.summary.total_count;
+          };
+          if (posts[i].hasOwnProperty("comments")){
+            comments += posts[i].comments.summary.total_count;
+          };
         }
         var engagement = shares + reactions + comments;
+        var post_count = posts.length;
+        var avg_engagement_per_post = engagement/post_count;
         FB.api(
           '/'+page_name,
           'GET',
           {"fields":"fan_count","access_token":access_token},
           function(response) {
             var fan_count = response.fan_count;
-            var avg_engagement = engagement/fan_count;
-            var avg_engagement_rounded_perc = round(avg_engagement*100, 2);
-            tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rounded_perc.toString() + "%";
+            var avg_engagement_rate = avg_engagement_per_post/fan_count;
+            var avg_engagement_rate_rounded_perc = round(avg_engagement_rate*100, 3);
+            tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rate_rounded_perc.toString() + "%";
           }
         );
       }

@@ -1,0 +1,58 @@
+h1 {
+  margin-bottom: 40px;
+}
+
+.container {
+	margin: 20px 0px;
+}
+
+.container#loginContainer {
+  padding: 0px;
+}
+
+#yt-login {
+  color: #fff;
+  border: 0px;
+  background-color: #E62117;
+}
+
+#yt-login:hover {
+  border: 0px;
+  background-color: #cc181e;
+}
+
+#details, #hideDetails {
+  display: none;
+}
+
+#containerTable {
+	padding: 0px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+th {
+  text-align: center;
+}
+
+.number {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+tr:nth-child(1n+3):hover {
+  background-color: #70B3FF;
+  color: #fff;
+}
+
+tr:nth-child(2) {
+  border-color: #405893;
+  background-color: #4862A3;
+  color: #fff;
+}

@@ -59,7 +59,7 @@ $(document).ready(function(){
     var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
     
     //Create Table:
-    var table = createTable("containerTable", wettbewerber, kriterien);
+    var tableData = createTable("containerTable", wettbewerber, kriterien);
   };
   
   var btnDetails = $("#btnDetails");

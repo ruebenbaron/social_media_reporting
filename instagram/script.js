@@ -9,7 +9,7 @@ $(document).ready(function(){
 
   //Functions:
   function createTable(container_id, wettbewerber, kriterien) {
-    var containerTable = document.getElementById(container);
+    var containerTable = document.getElementById(container_id);
     var table = document.createElement("table");
     table.id = "dashboard";
     table.className = "table";

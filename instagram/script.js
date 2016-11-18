@@ -1,5 +1,12 @@
 $(document).ready(function(){
   
+  //Analyse-Daten:
+  var wettbewerber = ["vwfsde","mercedesbenzbank","ingdiba", "targobank", "fidorde", "consorsbank", "commerzbank", "barclaysUK", "citibank", "chase"];
+  var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
+
+  //Create Table:
+  var tableData = createTable("containerTable", wettbewerber, kriterien);
+
   //Functions:
   function createTable(container_id, wettbewerber, kriterien) {
     var containerTable = document.getElementById(container);
@@ -54,12 +61,6 @@ $(document).ready(function(){
   if (token_index > 0) {
     var access_token = url.substr(token_index + 6,url.length);
     
-    //Analyse-Daten:
-    var wettbewerber = ["vwfsde","mercedesbenzbank","ingdiba", "targobank", "fidorde", "consorsbank", "commerzbank", "barclaysUK", "citibank", "chase"];
-    var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
-    
-    //Create Table:
-    var tableData = createTable("containerTable", wettbewerber, kriterien);
   };
   
   var btnDetails = $("#btnDetails");

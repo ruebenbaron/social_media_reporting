@@ -2,7 +2,7 @@ $(document).ready(function(){
   
   //Analyse-Daten:
   var wettbewerber = ["vwfsde","mercedesbenzbank","ingdiba", "targobank", "fidorde", "consorsbank", "commerzbank", "barclaysUK", "citibank", "chase"];
-  var kriterien = ["Page", "Fans", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
+  var kriterien = ["Page", "Follower", "Posts_Count", "Avg_Likes_per_Post", "Most_Successful_Post_Likes", "Avg_Engagement_Rate_per_Post"];
 
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
@@ -55,12 +55,22 @@ $(document).ready(function(){
     return tableData;
   }
   
+  function fillFollower_Count(page_name, access_token, tableData){
+    var follower_count_url = "https://api.instagram.com/v1/users/"+page_name+"/?access_token="+access_token;
+    $.post(follower_count_url, function(response){
+      var follower_count = response.data.counts.follows;
+      tableData[page_name].Follower = follower_count;
+    });
+  }
+  
   //Instagram API Init:
   var url = window.location.href;
   var token_index = url.indexOf("token");
   if (token_index > 0) {
     var access_token = url.substr(token_index + 6,url.length);
-    
+    for (i=0; i < wettbewerber.length; i++) {
+      fillFollower_Count(wettbewerber[i], access_token, tableData);
+    };
   };
   
   var btnDetails = $("#btnDetails");

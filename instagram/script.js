@@ -61,4 +61,17 @@ $(document).ready(function(){
     //Create Table:
     var table = createTable("containerTable", wettbewerber, kriterien);
   };
+  
+  var btnDetails = $("#btnDetails");
+    var divDetails = $("#details");
+    btnDetails.text("Show Details");
+    btnDetails.click(function() {
+      divDetails.toggle();
+      if(divDetails.is(":visible")){
+        btnDetails.text("Hide Details");
+        FB.XFBML.parse();
+      } else {
+        btnDetails.text("Show Details");
+      }
+    });
 });

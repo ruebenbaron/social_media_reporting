@@ -70,9 +70,14 @@ $(document).ready(function(){
   if (token_index > 0) {
     $("#loginStatus").text("Logged in.");
     var access_token = url.substr(token_index + 6,url.length);
-    for (i=0; i < wettbewerber.length; i++) {
+    $.post("https://api.instagram.com/v1/users/"+"self"+"/?access_token="+access_token, function(response){
+      var self_id = response.data.id;
+      var follower_count = response.data.counts.followed_by;
+      console.log(self_id, follower_count);
+    });
+    /*for (i=0; i < wettbewerber.length; i++) {
       fillFollower_Count(wettbewerber[i], access_token, tableData);
-    };
+    };*/
   };
   
   var btnDetails = $("#btnDetails");

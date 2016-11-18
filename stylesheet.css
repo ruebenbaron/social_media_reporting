@@ -46,7 +46,7 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-tr:nth-child(1n+2):hover {
+tr:nth-child(1n+3):hover {
   background-color: #70B3FF;
   color: #fff;
 }

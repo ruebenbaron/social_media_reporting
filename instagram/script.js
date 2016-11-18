@@ -56,6 +56,7 @@ $(document).ready(function(){
   }
   
   function fillFollower_Count(page_name, access_token, tableData){
+    //FEHLER: Access Denied.
     var follower_count_url = "https://api.instagram.com/v1/users/"+page_name+"/?access_token="+access_token;
     $.post(follower_count_url, function(response){
       var follower_count = response.data.counts.follows;

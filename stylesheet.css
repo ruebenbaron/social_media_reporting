@@ -1,9 +1,24 @@
+h1 {
+  margin-bottom: 40px;
+}
+
 .container {
 	margin: 20px 0px;
 }
 
 .container#loginContainer {
   padding: 0px;
+}
+
+#fb-login {
+  color: #fff;
+  border-color: #405893;
+  background-color: #4862A3;
+}
+
+#fb-login:hover {
+  border-color: #365899;
+  background-color: #365899;
 }
 
 #details, #hideDetails {
@@ -15,8 +30,8 @@
 }
 
 td, th {
-	border: 1px solid #dddddd;
-	padding: 8px;
+    border: 1px solid #dddddd;
+    padding: 8px;
 }
 
 th {
@@ -30,6 +45,19 @@ th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
+tr:nth-child(1n+2):hover {
+  background-color: #70B3FF;
+  color: #fff;
+}
+
+tr:nth-child(2) {
+  border-color: #405893;
+  background-color: #4862A3;
+  color: #fff;
+}
+
+
 
 .fb-post span, .fb-post iframe {
   min-width: 700px !important;

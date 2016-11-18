@@ -58,10 +58,10 @@ $(document).ready(function(){
   function fillFollower_Count(page_name, access_token, tableData){
     //FEHLER: Access Denied.
     var follower_count_url = "https://api.instagram.com/v1/users/"+page_name+"/?access_token="+access_token;
-    $.post(follower_count_url, function(response){
+    $.get(follower_count_url, function(response){
       var follower_count = response.data.counts.follows;
       tableData[page_name].Follower = follower_count;
-    });
+    }, "jsonp");
   }
   
   //Instagram API Init:
@@ -74,7 +74,7 @@ $(document).ready(function(){
       var self_id = response.data.id;
       var follower_count = response.data.counts.followed_by;
       console.log(self_id, follower_count);
-    });
+    }, "jsonp");
     /*for (i=0; i < wettbewerber.length; i++) {
       fillFollower_Count(wettbewerber[i], access_token, tableData);
     };*/

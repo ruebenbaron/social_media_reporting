@@ -1,0 +1,60 @@
+.container {
+	margin: 20px 0px;
+}
+
+h1 {
+  margin-bottom: 40px;
+}
+
+.container#loginContainer {
+  padding: 0px;
+}
+
+#insta-login {
+  color: #262626;
+  border-color: #DBDBDB;
+  background-color: #FFF;
+}
+
+#insta-login a {
+  color: #262626;
+  text-decoration: none;
+}
+
+#insta-login:hover {
+  background-color: #fafafa;
+}
+
+#details, #hideDetails {
+  display: none;
+}
+
+#containerTable {
+	padding: 0px;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+}
+
+th {
+  text-align: center;
+}
+
+.number {
+  text-align: right;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+tr:nth-child(1n+3):hover {
+  background-color: #70B3FF;
+  color: #fff;
+}
+tr:nth-child(2) {
+  border-color: #405893;
+  background-color: #4862A3;
+  color: #fff;
+}

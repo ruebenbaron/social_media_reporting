@@ -1,7 +1,8 @@
 $(document).ready(function(){
   var url = window.location.href;
-  if (url.indexOf("code") > 0) {
-    var code = url.substr(indexOf,url.length);
+  var code_index = url.indexOf("code");
+  if (code_index > 0) {
+    var code = url.substr(code_index,url.length);
     console.log(code);
   };
 });

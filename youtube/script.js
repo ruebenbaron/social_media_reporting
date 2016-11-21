@@ -6,6 +6,8 @@ $(document).ready(function(){
   
   //API-Daten:
   var key = "AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8";
+  var sinceDate = new Date();
+  sinceDate.setDate(sinceDate.getDate() - 30);
   
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
@@ -65,10 +67,22 @@ $(document).ready(function(){
   }
   
   function fillVideos_Count(page_name, tableData){
+    //Can handle max. of 50 Videos per month.
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function(response) {
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&orderby=published&key="+key, function(response) {
-        var vid_count = response.items.length;
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&maxResults=50&orderby=published&key="+key, function(response) {
+        //Check if video was was published less than 30 days ago:
+        var vids = response.items;
+        var vid_count = 0;
+        for (i=0; i<vids.length, i++) {
+          if (vids[i].snippet.publishedAt > sinceDate) {
+            //If yes: vid_count += 1
+            vid_count++;
+          } else {
+            //If older: end loop
+            break;
+          };
+        };
         tableData[page_name].Videos_Count.innerHTML = vid_count;
       }); 
     }); 

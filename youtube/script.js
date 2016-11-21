@@ -56,6 +56,20 @@ $(document).ready(function(){
     return tableData;
   }
   
+  function sortByDate(list){
+    return list.sort(function(a, b) {
+      var aDate = new Date(a.snippet.publishedAt);
+      var bDate = new Date(b.snippet.publishedAt);
+      if (aDate > bDate) {
+        return -1;
+      } else if (aDate < bDate) {
+        return 1;
+      } else {
+        return 0;
+      };
+    });
+  }
+  
   function fillChannelName(page_name, tableData){
     tableData[page_name].Channel.innerHTML = page_name;
   }
@@ -74,23 +88,15 @@ $(document).ready(function(){
       jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&maxResults=50&key="+key, function(response) {
         //Check if video was was published less than 30 days ago:
         var vids = response.items;
-        vids.sort(function(a, b) {
-          var aDate = new Date(a.snippet.publishedAt);
-          var bDate = new Date(b.snippet.publishedAt);
-          if (aDate > bDate) {
-            return -1;
-          } else if (aDate < bDate) {
-            return 1;
-          } else {
-            return 0;
-          };
-        });
+        vids = sortByDate(vids);
         var vid_count = 0;
+        var vids_since = [];
         for (i=0; i<vids.length; i++) {
           var vid_date = new Date(vids[i].snippet.publishedAt);
           if (vid_date > sinceDate) {
             //If yes: vid_count += 1
             vid_count++;
+            vids_since.push(vids[i]);
           } else {
             //If older: end loop
             break;
@@ -99,6 +105,51 @@ $(document).ready(function(){
         tableData[page_name].Videos_Count.innerHTML = vid_count;
       }); 
     }); 
+  }
+  
+  function getUploadsPlaylist(page_name, handleUploadsPlaylist){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function(response){
+      var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, function(response){
+        var uploads = response.items;
+        uploads = sortByDate(uploads);
+        var uploads_since = [];
+        for (i=0; i<uploads.length; i++) {
+          var vid_date = new Date(uploads[i].snippet.publishedAt);
+          if (vid_date > sinceDate) {
+            //If younger: add video to uploads_since
+            uploads_since.push(uploads[i]);
+          } else {
+            //If older: end loop
+            break;
+          };
+        };
+        console.log(uploads_since);
+        handleUploadsPlaylist();
+      });
+    });
+  }
+  
+  function getVideoStatistics(video_id, handleVideoStatistics){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function(response){
+      var statistics = response.items[0].statistics;
+      console.log(statistics);
+      handleVideoStatistics();
+    });
+  }
+  
+  function fillAvg_Views_per_Video(page_name, tableData) {
+    getUploadsPlaylist(page_name, function(page_name, tableData){
+      var views_total = 0;
+      for (i=0; i<uploads_since.length; i++){
+        var video_id = uploads_since[i].contentDetails.videoId
+        getVideoStatistics(video_id, function(page_name, tableData){
+          views_total += statistics.viewCount;
+        });
+      };
+      var avg_views = views_total / uploads_since.length;
+      tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views;
+    });
   }
   
   //YouTube API:

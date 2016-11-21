@@ -58,13 +58,24 @@ $(document).ready(function(){
   }
   
   function fillSubscriptions(page_name, tableData){
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=id&forUsername="+page_name+"&key="+key, function(response) {
-      var channel_id = response.items[0].id;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key="+key, function(response) {
-        var sub_count = response.items[0].statistics.subscriberCount;
-        tableData[page_name].Subscriptions.innerHTML = sub_count;
-      });
-    });  
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
+      var sub_count = response.items[0].statistics.subscriberCount;
+      tableData[page_name].Subscriptions.innerHTML = sub_count;
+    }); 
+  }
+  
+  function getUploadsID(page_name, handleResult){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function(response) {
+      var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
+      handleResult();
+    }); 
+  }
+  
+  function fillVideos_Count(page_name, tableData, uploads_id){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&orderby=published&key="+key, function(response) {
+      var vid_count = response.items.length;
+      tableData[page_name].Videos_Count.innerHTML = vid_count;
+    }); 
   }
   
   //YouTube API:

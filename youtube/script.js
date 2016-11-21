@@ -139,11 +139,11 @@ $(document).ready(function(){
   }
   
   function fillAvg_Views_per_Video(page_name, tableData) {
-    getUploadsPlaylist(page_name, function(page_name, tableData){
+    getUploadsPlaylist(page_name, function(page_name, tableData, uploads_since){
       var views_total = 0;
       for (i=0; i<uploads_since.length; i++){
         var video_id = uploads_since[i].contentDetails.videoId
-        getVideoStatistics(video_id, function(page_name, tableData){
+        getVideoStatistics(video_id, function(page_name, tableData, statistics){
           views_total += statistics.viewCount;
         });
       };

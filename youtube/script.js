@@ -75,7 +75,15 @@ $(document).ready(function(){
         //Check if video was was published less than 30 days ago:
         var vids = response.items;
         vids.sort(function(a, b) {
-          return a.snippet.publishedAt - b.snippet.publishedAt;
+          var aDate = new Date(a.snippet.publishedAt);
+          var bDate = new Date(b.snippet.publishedAt);
+          if (aDate > bDate) {
+            return -1;
+          } else if (aDate < bDate) {
+            return 1;
+          } else {
+            return 0;
+          };
         });
         var vid_count = 0;
         for (i=0; i<vids.length; i++) {

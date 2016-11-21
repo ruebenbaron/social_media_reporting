@@ -71,9 +71,12 @@ $(document).ready(function(){
     //Can handle max. of 50 Videos per month.
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function(response) {
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&maxResults=50&orderby=published&key="+key, function(response) {
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&maxResults=50&key="+key, function(response) {
         //Check if video was was published less than 30 days ago:
         var vids = response.items;
+        vids.sort(function(a, b) {
+          return a.snippet.publishedAt - b.snippet.publishedAt;
+        });
         var vid_count = 0;
         for (i=0; i<vids.length; i++) {
           var vid_date = new Date(vids[i].snippet.publishedAt);

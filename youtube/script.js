@@ -3,7 +3,10 @@ $(document).ready(function(){
   //Analyse-Daten:
   var wettbewerber = ["vwfsde", "mercedesbenzbank", "ingdiba", "targobank", "comdirect", "FidorCommBanking", "DeutscheKreditbankAG", "CortalConsorsDe", "CommerzbankPrivat", "DeutscheBankGruppe", "ally", "barclaysonline"];
   var kriterien = ["Channel", "Subscriptions", "Videos_Count", "Avg_Views_per_Video", "Avg_Likes_per_Video", "Most_Successful_Video_Views", "Most_Successful_Video_Likes", "Avg_Views_compared_to_Subs", "Avg_Engagement_Rate_per_Video"];
-
+  
+  //API-Daten:
+  var key = "AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8";
+  
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
 
@@ -51,14 +54,14 @@ $(document).ready(function(){
   }
   
   function getChannelId(page_name, handleResult){
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=vwfsde&key=AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8", function(response) {
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=id&forUsername="+page_name+"&key="+key, function(response) {
       var channel_id = response.items[0].id;
       handleResult();
     });
   }
   
   function fillSubscriptions(page_name, channel_id, tableData){
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key=AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8", function(response) {
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key="+key, function(response) {
       var sub_count = response.items[0].statistics.subscriberCount;
       tableData[page_name].Subscriptions.innerHTML = sub_count;
     });
@@ -67,7 +70,7 @@ $(document).ready(function(){
   
   //YouTube API:
   for (i=0; i<wettbewerber.length; i++){
-    getChannelId(wettbewerber[i], fillSubscriptions);
+    getChannelId(wettbewerber[i], fillSubscriptions(wettbewerber[i], channel_id, tableData));
   };
   
   var btnDetails = $("#btnDetails");

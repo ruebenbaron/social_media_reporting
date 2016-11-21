@@ -8,6 +8,7 @@ $(document).ready(function(){
   var key = "AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8";
   var sinceDate = new Date();
   sinceDate.setDate(sinceDate.getDate() - 30);
+  console.log(sinceDate);
   
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);

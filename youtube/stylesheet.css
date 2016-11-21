@@ -10,17 +10,6 @@ h1 {
   padding: 0px;
 }
 
-#yt-login {
-  color: #fff;
-  border: 0px;
-  background-color: #E62117;
-}
-
-#yt-login:hover {
-  border: 0px;
-  background-color: #cc181e;
-}
-
 #details, #hideDetails {
   display: none;
 }
@@ -47,12 +36,11 @@ tr:nth-child(even) {
 }
 
 tr:nth-child(1n+3):hover {
-  background-color: #70B3FF;
+  background-color: #cc181e;
   color: #fff;
 }
 
 tr:nth-child(2) {
-  border-color: #405893;
-  background-color: #4862A3;
+  background-color: #E62117;
   color: #fff;
 }

@@ -50,8 +50,25 @@ $(document).ready(function(){
     return tableData;
   }
   
-  //YouTube API Init:
-  //...
+  function getChannelId(page_name, handleResult){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=id&forUsername=vwfsde&key=AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8", function(response) {
+      var channel_id = response.items[0].id;
+      handleResult();
+    });
+  }
+  
+  function fillSubscriptions(page_name, channel_id, tableData){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key=AIzaSyALPLLisEyYHg0CB_MUu78UuG_LnYFnQu8", function(response) {
+      var sub_count = response.items[0].statistics.subscriberCount;
+      tableData[page_name].Subscriptions.innerHTML = sub_count;
+    });
+    
+  }
+  
+  //YouTube API:
+  for (i=0; i<wettbewerber.length; i++){
+    getChannelId(wettbewerber[i], fillSubscriptions);
+  };
   
   var btnDetails = $("#btnDetails");
     var divDetails = $("#details");

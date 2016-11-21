@@ -53,24 +53,19 @@ $(document).ready(function(){
     return tableData;
   }
   
-  function getChannelId(page_name, handleResult){
+  function fillSubscriptions(page_name, tableData){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=id&forUsername="+page_name+"&key="+key, function(response) {
       var channel_id = response.items[0].id;
-      handleResult();
-    });
-  }
-  
-  function fillSubscriptions(page_name, channel_id, tableData){
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key="+key, function(response) {
-      var sub_count = response.items[0].statistics.subscriberCount;
-      tableData[page_name].Subscriptions.innerHTML = sub_count;
-    });
-    
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&id="+channel_id+"&key="+key, function(response) {
+        var sub_count = response.items[0].statistics.subscriberCount;
+        tableData[page_name].Subscriptions.innerHTML = sub_count;
+      });
+    });  
   }
   
   //YouTube API:
   for (i=0; i<wettbewerber.length; i++){
-    getChannelId(wettbewerber[i], fillSubscriptions(wettbewerber[i], channel_id, tableData));
+    fillSubscriptions(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

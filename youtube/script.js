@@ -75,7 +75,8 @@ $(document).ready(function(){
         var vids = response.items;
         var vid_count = 0;
         for (i=0; i<vids.length; i++) {
-          if (vids[i].snippet.publishedAt > sinceDate) {
+          var vid_date = new Date(vids[i].snippet.publishedAt);
+          if (vid_date > sinceDate) {
             //If yes: vid_count += 1
             vid_count++;
           } else {

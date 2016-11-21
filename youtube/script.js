@@ -74,7 +74,7 @@ $(document).ready(function(){
         //Check if video was was published less than 30 days ago:
         var vids = response.items;
         var vid_count = 0;
-        for (i=0; i<vids.length, i++) {
+        for (i=0; i<vids.length; i++) {
           if (vids[i].snippet.publishedAt > sinceDate) {
             //If yes: vid_count += 1
             vid_count++;

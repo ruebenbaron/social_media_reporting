@@ -64,17 +64,13 @@ $(document).ready(function(){
     }); 
   }
   
-  function getUploadsID(page_name, handleResult){
+  function fillVideos_Count(page_name, tableData){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function(response) {
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      handleResult();
-    }); 
-  }
-  
-  function fillVideos_Count(page_name, tableData, uploads_id){
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&orderby=published&key="+key, function(response) {
-      var vid_count = response.items.length;
-      tableData[page_name].Videos_Count.innerHTML = vid_count;
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId="+uploads_id+"&orderby=published&key="+key, function(response) {
+        var vid_count = response.items.length;
+        tableData[page_name].Videos_Count.innerHTML = vid_count;
+      }); 
     }); 
   }
   
@@ -82,7 +78,7 @@ $(document).ready(function(){
   for (i=0; i<wettbewerber.length; i++){
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
-    getUploadsID(wettbewerber[i], fillVideos_Count(wettbewerber[i], tableData, uploads_id)); 
+    fillVideos_Count(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

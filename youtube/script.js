@@ -82,6 +82,7 @@ $(document).ready(function(){
   for (i=0; i<wettbewerber.length; i++){
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
+    getUploadsID(wettbewerber[i], fillVideos_Count(wettbewerber[i], tableData, uploads_id)); 
   };
   
   var btnDetails = $("#btnDetails");

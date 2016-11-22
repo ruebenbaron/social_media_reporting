@@ -168,7 +168,7 @@ $(document).ready(function(){
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
     fillVideos_Count(wettbewerber[i], tableData);
-    fillAvg_Views_per_Video(wettbewerber[i], tableData);
+    //fillAvg_Views_per_Video(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

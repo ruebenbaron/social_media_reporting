@@ -107,6 +107,77 @@ $(document).ready(function(){
     }); 
   }
   
+  function fillAvg_Views_per_Video(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Number of Uploads since 30 days ago.
+    //Get Views per uploaded Video.
+    //Add Views to views_total.
+    //Get Average Views per Video.
+    //Fill tableData with Average View per Video.
+  }
+  
+  function fillAvg_Likes_per_Video(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Number of Uploads since 30 days ago.
+    //Get Likes per uploaded Video.
+    //Add Likes to likes_total.
+    //Get Average Likes per Video.
+    //Fill tableData with Average Likes per Video.
+  }
+  
+  function fillMost_Successful_Video_Views(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Views of first Upload.
+    //Set first Upload as Champion.
+    //Get Views of second Upload.
+    //Challenge Champion.
+    //If Success: Replace Champion.
+    //Fill tableData with Views of Champion.
+  }
+  
+  function fillMost_Successful_Video_Likes(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Likes of first Upload.
+    //Set first Upload as Champion.
+    //Get Likes of second Upload.
+    //Challenge Champion.
+    //If Success: Replace Champion.
+    //Fill tableData with Likes of Champion.
+  }
+  
+  function fillAvg_Views_compared_to_Subs(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Number of Uploads since 30 days ago.
+    //Get Views per uploaded Video.
+    //Add Views to views_total.
+    //Get Average Views per Video.
+    //Get Subscriptions of Channel.
+    //Divide Average Views per Video by Subscriptions of Channel.
+    //Fill tableData with Average Views compared to Subs.
+  }
+  
+  function fillAvg_Engagement_Rate_per_Video(page_name, tableData) {
+    //Get Uploads Playlist.
+    //Get Uploads since 30 days ago.
+    //Get Number of Uploads since 30 days ago.
+    //Get Views per uploaded Video.
+    //Add Views to views_total.
+    //Get Likes per uploaded Video.
+    //Add Likes to likes_total.
+    //Get Dislikes per uploaded Video.
+    //Add Dislikes to dislikes_total.
+    //Get Comments per uploaded Video.
+    //Add Comments to comments_total.
+    //Get Sum of likes_total, dislikes_total and comments_total.
+    //Divide sum_engagement by views_total.
+    //Fill tableData with Average Engagement Rate per Video.
+  }
+  
   /*function getVideoStatistics(video_id, handleVideoStatistics){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, handleVideoStatistics);
   }
@@ -145,8 +216,6 @@ $(document).ready(function(){
       jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, handleUploadsPlaylist);
     });
   }
-  
-  
   
   function fillAvg_Views_per_Video(page_name, tableData) {
     getUploadsPlaylist(page_name, handleUploadsPlaylist);

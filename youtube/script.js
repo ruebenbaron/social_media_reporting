@@ -107,7 +107,7 @@ $(document).ready(function(){
     }); 
   }
   
-  function getVideoStatistics(video_id, handleVideoStatistics){
+  /*function getVideoStatistics(video_id, handleVideoStatistics){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, handleVideoStatistics);
   }
   
@@ -161,7 +161,7 @@ $(document).ready(function(){
       var avg_views = views_total / uploads_since.length;
       tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views;
     });
-  }
+  }*/
   
   //YouTube API:
   for (i=0; i<wettbewerber.length; i++){

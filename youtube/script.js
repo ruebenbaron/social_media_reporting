@@ -157,7 +157,23 @@ $(document).ready(function(){
       var successful_call_counter = 0;
       for (i=0; i<uploads_since.length; i++){
         var video_id = uploads_since[i].contentDetails.videoId;
-        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function(response){handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response)});
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function(response){function handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response){
+          var statistics = response.items[0].statistics;
+          var view_count = parseInt(statistics.viewCount, 10);
+          //Add Views to views_total.
+          views_total += view_count;
+          //Add to counter of successful Statistic Calls:
+          successful_call_counter++;
+          //If all calls were successful:
+          if (successful_call_counter == num_uploads_since) {
+            //Get Average Views per Video.
+            var avg_views_per_video = views_total / num_uploads_since;
+            //Round Average Views per Video.
+            var avg_views_per_video_rounded = round(avg_views_per_video, 0);
+            //Fill tableData with rounded Average View per Video.
+            tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
+          };
+        }});
       };
     }
   }

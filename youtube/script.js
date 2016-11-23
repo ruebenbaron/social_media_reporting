@@ -139,15 +139,15 @@ $(document).ready(function(){
             views_total += statistics.viewCount;
             //Add to counter of successful Statistic Calls:
             successful_call_counter++;
+            //If all calls were successful:
+            if (successful_call_counter == num_uploads_since) {
+              //Get Average Views per Video.
+              var avg_views_per_video = views_total / num_uploads_since;
+              //Fill tableData with Average View per Video.
+              tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
+            }
           });
         };
-        //If all calls were successful:
-        if (successful_call_counter == num_uploads_since) {
-          //Get Average Views per Video.
-          var avg_views_per_video = views_total / num_uploads_since;
-          //Fill tableData with Average View per Video.
-          tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
-        }
       });
     });
   }

@@ -109,12 +109,41 @@ $(document).ready(function(){
   
   function fillAvg_Views_per_Video(page_name, tableData) {
     //Get Uploads Playlist.
-    //Get Uploads since 30 days ago.
-    //Get Number of Uploads since 30 days ago.
-    //Get Views per uploaded Video.
-    //Add Views to views_total.
-    //Get Average Views per Video.
-    //Fill tableData with Average View per Video.
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(response){
+      var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, function handleUploadsPlaylist(response){
+        //Get Uploads since 30 days ago.
+        var uploads = response.items;
+        uploads = sortByDate(uploads);
+        var uploads_since = [];
+        for (i=0; i<uploads.length; i++) {
+          var vid_date = new Date(uploads[i].snippet.publishedAt);
+          if (vid_date > sinceDate) {
+            //If younger: add video to uploads_since
+            uploads_since.push(uploads[i]);
+          } else {
+            //If older: end loop
+            break;
+          };
+        };
+        //Get Number of Uploads since 30 days ago.
+        var num_uploads_since = uploads_since.length;
+        //Get Views per uploaded Video.
+        var views_total = 0;
+        for (i=0; i<uploads_since.length; i++){
+          var video_id = uploads_since[i].contentDetails.videoId;
+          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+            var statistics = response.items[0].statistics;
+            //Add Views to views_total.
+            views_total += statistics.viewCount;
+          });
+        };
+        //Get Average Views per Video.
+        var avg_views_per_video = views_total / num_uploads_since;
+        //Fill tableData with Average View per Video.
+        tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
+      });
+    });
   }
   
   function fillAvg_Likes_per_Video(page_name, tableData) {
@@ -237,7 +266,7 @@ $(document).ready(function(){
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
     fillVideos_Count(wettbewerber[i], tableData);
-    //fillAvg_Views_per_Video(wettbewerber[i], tableData);
+    fillAvg_Views_per_Video(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

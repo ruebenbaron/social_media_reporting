@@ -129,7 +129,7 @@ $(document).ready(function(){
     return uploads_since;
   }
   
-  function handleUploadsPlaylist(page_name, tableData, response){
+  /*function handleUploadsPlaylistforAvgViews(page_name, tableData, response){
     //Get Uploads since 30 days ago.
     var uploads = response.items;
     uploads = sortByDate(uploads);
@@ -164,7 +164,7 @@ $(document).ready(function(){
         });
       };
     }
-  }
+  }*/
   
   function getUploadsPlaylist(page_name, callbackFunction){
     //Get Uploads Playlist.
@@ -176,9 +176,41 @@ $(document).ready(function(){
   
   function fillAvg_Views_per_Video(page_name, tableData) {
     //Get Uploads Playlist.
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(response){
-      var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, function(response){handleUploadsPlaylist(page_name, tableData, response)});
+    getUploadsPlaylist(page_name, function(response){
+      //Get Uploads since 30 days ago.
+      var uploads = response.items;
+      uploads = sortByDate(uploads);
+      var uploads_since = getUploadsSince(uploads, sinceDate);
+      //Get Number of Uploads since 30 days ago.
+      var num_uploads_since = uploads_since.length;
+      //If no uploads in last 30 days:
+      if (num_uploads_since == 0) {
+        tableData[page_name].Avg_Views_per_Video.innerHTML = 0;
+      } else {
+        //Get Views per uploaded Video.
+        var views_total = 0;
+        var successful_call_counter = 0;
+        for (i=0; i<uploads_since.length; i++){
+          var video_id = uploads_since[i].contentDetails.videoId;
+          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+            var statistics = response.items[0].statistics;
+            var view_count = parseInt(statistics.viewCount, 10);
+            //Add Views to views_total.
+            views_total += view_count;
+            //Add to counter of successful Statistic Calls:
+            successful_call_counter++;
+            //If all calls were successful:
+            if (successful_call_counter == num_uploads_since) {
+              //Get Average Views per Video.
+              var avg_views_per_video = views_total / num_uploads_since;
+              //Round Average Views per Video.
+              var avg_views_per_video_rounded = round(avg_views_per_video, 0);
+              //Fill tableData with rounded Average View per Video.
+              tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
+            };
+          });
+        };
+      }
     });
   }
   

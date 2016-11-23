@@ -136,7 +136,7 @@ $(document).ready(function(){
         var num_uploads_since = uploads_since.length;
         //If no uploads in last 30 days:
         if (num_uploads_since == 0) {
-          tableData[page_name].Avg_Views_per_Video.innerHTML = "k.A.";
+          tableData[page_name].Avg_Views_per_Video.innerHTML = 0;
         } else {
           //Get Views per uploaded Video.
           var views_total = 0;
@@ -154,8 +154,10 @@ $(document).ready(function(){
               if (successful_call_counter == num_uploads_since) {
                 //Get Average Views per Video.
                 var avg_views_per_video = views_total / num_uploads_since;
-                //Fill tableData with Average View per Video.
-                tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
+                //Round Average Views per Video.
+                var avg_views_per_video_rounded = round(avg_views_per_video, 0);
+                //Fill tableData with rounded Average View per Video.
+                tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
               };
             });
           };

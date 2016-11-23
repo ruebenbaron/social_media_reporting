@@ -14,6 +14,12 @@ $(document).ready(function(){
   var tableData = createTable("containerTable", wettbewerber, kriterien);
 
   //Functions:
+  function round(value, precision) {
+    var multiplier = Math.pow(10, precision || 0);
+    var rounded = Math.round(value * multiplier) / multiplier;
+    return rounded.toFixed(precision);
+  }
+  
   function createTable(container_id, wettbewerber, kriterien) {
     var containerTable = document.getElementById(container_id);
     var table = document.createElement("table");
@@ -128,32 +134,32 @@ $(document).ready(function(){
         };
         //Get Number of Uploads since 30 days ago.
         var num_uploads_since = uploads_since.length;
-        //Get Views per uploaded Video.
-        var views_total = 0;
-        var successful_call_counter = 0;
-        for (i=0; i<uploads_since.length; i++){
-          var video_id = uploads_since[i].contentDetails.videoId;
-          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
-            var statistics = response.items[0].statistics;
-            var view_count = parseInt(statistics.viewCount, 10);
-            //Add Views to views_total.
-            views_total += view_count;
-            //Add to counter of successful Statistic Calls:
-            successful_call_counter++;
-            //If all calls were successful:
-            if (successful_call_counter == num_uploads_since) {
-              //If no uploads in last 30 days:
-              if (num_uploads_since == 0) {
-                tableData[page_name].Avg_Views_per_Video.innerHTML = "k.A.";
-              } else {
+        //If no uploads in last 30 days:
+        if (num_uploads_since == 0) {
+          tableData[page_name].Avg_Views_per_Video.innerHTML = "k.A.";
+        } else {
+          //Get Views per uploaded Video.
+          var views_total = 0;
+          var successful_call_counter = 0;
+          for (i=0; i<uploads_since.length; i++){
+            var video_id = uploads_since[i].contentDetails.videoId;
+            jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+              var statistics = response.items[0].statistics;
+              var view_count = parseInt(statistics.viewCount, 10);
+              //Add Views to views_total.
+              views_total += view_count;
+              //Add to counter of successful Statistic Calls:
+              successful_call_counter++;
+              //If all calls were successful:
+              if (successful_call_counter == num_uploads_since) {
                 //Get Average Views per Video.
                 var avg_views_per_video = views_total / num_uploads_since;
                 //Fill tableData with Average View per Video.
                 tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
               };
-            };
-          });
-        };
+            });
+          };
+        }
       });
     });
   }

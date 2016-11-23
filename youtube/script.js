@@ -157,16 +157,16 @@ $(document).ready(function(){
       var successful_call_counter = 0;
       for (i=0; i<uploads_since.length; i++){
         var video_id = uploads_since[i].contentDetails.videoId;
-        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response));
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function(response){handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response)});
       };
     }
   }
   
   function fillAvg_Views_per_Video(page_name, tableData) {
     //Get Uploads Playlist.
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(page_name, tableData, response){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(response){
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, handleUploadsPlaylist(page_name, tableData, response));
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, function(response){handleUploadsPlaylist(page_name, tableData, response)});
     });
   }
   

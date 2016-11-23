@@ -131,10 +131,8 @@ $(document).ready(function(){
     };
   }
   
-  function handleUploadsPlaylist(page_name, tableData, response){
+  function getUploadsSince(uploads, sinceDate){
     //Get Uploads since 30 days ago.
-    var uploads = response.items;
-    uploads = sortByDate(uploads);
     var uploads_since = [];
     for (i=0; i<uploads.length; i++) {
       var vid_date = new Date(uploads[i].snippet.publishedAt);
@@ -146,6 +144,14 @@ $(document).ready(function(){
         break;
       };
     };
+    return uploads_since;
+  }
+  
+  function handleUploadsPlaylist(page_name, tableData, response){
+    //Get Uploads since 30 days ago.
+    var uploads = response.items;
+    uploads = sortByDate(uploads);
+    var uploads_since = getUploadsSince(uploads, sinceDate);
     //Get Number of Uploads since 30 days ago.
     var num_uploads_since = uploads_since.length;
     //If no uploads in last 30 days:

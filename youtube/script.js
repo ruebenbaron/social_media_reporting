@@ -142,7 +142,7 @@ $(document).ready(function(){
           });
         };
         //If all calls were successful:
-        if (successful_call_counter = num_uploads_since) {
+        if (successful_call_counter == num_uploads_since) {
           //Get Average Views per Video.
           var avg_views_per_video = views_total / num_uploads_since;
           //Fill tableData with Average View per Video.

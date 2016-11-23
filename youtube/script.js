@@ -157,7 +157,7 @@ $(document).ready(function(){
       var successful_call_counter = 0;
       for (i=0; i<uploads_since.length; i++){
         var video_id = uploads_since[i].contentDetails.videoId;
-        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function(response){function handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response){
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
           var statistics = response.items[0].statistics;
           var view_count = parseInt(statistics.viewCount, 10);
           //Add Views to views_total.
@@ -173,7 +173,7 @@ $(document).ready(function(){
             //Fill tableData with rounded Average View per Video.
             tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
           };
-        }});
+        });
       };
     }
   }

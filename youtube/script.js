@@ -113,7 +113,7 @@ $(document).ready(function(){
     }); 
   }
   
-  function handleVideoStatistics(page_name, views_total, successful_call_counter, num_uploads_since, response){
+  function handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response){
     var statistics = response.items[0].statistics;
     var view_count = parseInt(statistics.viewCount, 10);
     //Add Views to views_total.
@@ -131,7 +131,7 @@ $(document).ready(function(){
     };
   }
   
-  function handleUploadsPlaylist(page_name, response){
+  function handleUploadsPlaylist(page_name, tableData, response){
     //Get Uploads since 30 days ago.
     var uploads = response.items;
     uploads = sortByDate(uploads);
@@ -157,7 +157,7 @@ $(document).ready(function(){
       var successful_call_counter = 0;
       for (i=0; i<uploads_since.length; i++){
         var video_id = uploads_since[i].contentDetails.videoId;
-        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, handleVideoStatistics(page_name, views_total, successful_call_counter, num_uploads_since, response));
+        jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, handleVideoStatistics(page_name, tableData, views_total, successful_call_counter, num_uploads_since, response));
       };
     }
   }
@@ -166,7 +166,7 @@ $(document).ready(function(){
     //Get Uploads Playlist.
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(response){
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
-      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, handleUploadsPlaylist(page_name, response));
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, handleUploadsPlaylist(page_name, tableData, response));
     });
   }
   

@@ -164,7 +164,7 @@ $(document).ready(function(){
   
   function fillAvg_Views_per_Video(page_name, tableData) {
     //Get Uploads Playlist.
-    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(response){
+    jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=contentDetails&forUsername="+page_name+"&key="+key, function handleChannelDetails(page_name, tableData, response){
       var uploads_id = response.items[0].contentDetails.relatedPlaylists.uploads;
       jQuery.getJSON("https://www.googleapis.com/youtube/v3/playlistItems?part=snippet,contentDetails&playlistId="+uploads_id+"&maxResults=50&key="+key, handleUploadsPlaylist(page_name, tableData, response));
     });

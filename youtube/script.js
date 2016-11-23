@@ -135,17 +135,23 @@ $(document).ready(function(){
           var video_id = uploads_since[i].contentDetails.videoId;
           jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
             var statistics = response.items[0].statistics;
+            var view_count = parseInt(statistics.viewCount, 10);
             //Add Views to views_total.
-            views_total += statistics.viewCount;
+            views_total += view_count;
             //Add to counter of successful Statistic Calls:
             successful_call_counter++;
             //If all calls were successful:
             if (successful_call_counter == num_uploads_since) {
-              //Get Average Views per Video.
-              var avg_views_per_video = views_total / num_uploads_since;
-              //Fill tableData with Average View per Video.
-              tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
-            }
+              //If no uploads in last 30 days:
+              if (num_uploads_since == 0) {
+                tableData[page_name].Avg_Views_per_Video.innerHTML = "k.A.";
+              } else {
+                //Get Average Views per Video.
+                var avg_views_per_video = views_total / num_uploads_since;
+                //Fill tableData with Average View per Video.
+                tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video;
+              };
+            };
           });
         };
       });

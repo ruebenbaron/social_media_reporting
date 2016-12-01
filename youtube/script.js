@@ -332,15 +332,52 @@ $(document).ready(function(){
   }
   
   function fillAvg_Views_compared_to_Subs(page_name, tableData) {
+    var avg_views = 0;
     //Get Uploads Playlist.
-    //Get Uploads since 30 days ago.
-    //Get Number of Uploads since 30 days ago.
-    //Get Views per uploaded Video.
-    //Add Views to views_total.
-    //Get Average Views per Video.
-    //Get Subscriptions of Channel.
-    //Divide Average Views per Video by Subscriptions of Channel.
-    //Fill tableData with Average Views compared to Subs.
+    getUploadsPlaylist(page_name, function(response){
+      //Get Uploads since 30 days ago.
+      var uploads = response.items;
+      uploads = sortByDate(uploads);
+      var uploads_since = getUploadsSince(uploads, sinceDate);
+      //Get Number of Uploads since 30 days ago.
+      var num_uploads_since = uploads_since.length;
+      //If no uploads in last 30 days:
+      if (num_uploads_since == 0) {
+        avg_views = 0;
+      } else {
+        //Get Views per uploaded Video.
+        var views_total = 0;
+        var successful_call_counter = 0;
+        for (i=0; i<uploads_since.length; i++){
+          var video_id = uploads_since[i].contentDetails.videoId;
+          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+            var statistics = response.items[0].statistics;
+            var view_count = parseInt(statistics.viewCount, 10);
+            //Add Views to views_total.
+            views_total += view_count;
+            //Add to counter of successful Statistic Calls:
+            successful_call_counter++;
+            //If all calls were successful:
+            if (successful_call_counter == num_uploads_since) {
+              //Get Average Views per Video.
+              var avg_views_per_video = views_total / num_uploads_since;
+              //Round Average Views per Video.
+              var avg_views_per_video_rounded = round(avg_views_per_video, 0);
+              //Avg Views is rounded Average Views per Video.
+              avg_views = avg_views_per_video_rounded;
+              //Get Subscriptions of Channel.
+              jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
+                var sub_count = response.items[0].statistics.subscriberCount;
+                //Divide Average Views per Video by Subscriptions of Channel.
+                var avg_views_compared_subs = round(avg_views/sub_count, 0);
+                //Fill tableData with Average Views compared to Subs.
+                tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs;
+              });
+            };
+          });
+        };
+      }
+    });
   }
   
   function fillAvg_Engagement_Rate_per_Video(page_name, tableData) {
@@ -368,7 +405,8 @@ $(document).ready(function(){
     fillAvg_Views_per_Video(wettbewerber[i], tableData);
     fillAvg_Likes_per_Video(wettbewerber[i], tableData);
     fillMost_Successful_Video_Views(wettbewerber[i], tableData);
-    fillMost_Successful_Video_Likes(wettbewerber[i], tableData)
+    fillMost_Successful_Video_Likes(wettbewerber[i], tableData);
+    fillAvg_Views_compared_to_Subs(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

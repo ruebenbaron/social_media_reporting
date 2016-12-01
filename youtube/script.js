@@ -226,6 +226,7 @@ $(document).ready(function(){
   function appendPageDiv(page_name) {
     var div_page = document.createElement("div");
     div_page.id = page_name + "_details";
+    div_page.className = "container";
     $("#details").append(div_page);
     var header = document.createElement("h2");
     header.innerHTML = page_name;

@@ -219,13 +219,49 @@ $(document).ready(function(){
   
   function fillMost_Successful_Video_Views(page_name, tableData) {
     //Get Uploads Playlist.
-    //Get Uploads since 30 days ago.
-    //Get Views of first Upload.
-    //Set first Upload as Champion.
-    //Get Views of second Upload.
-    //Challenge Champion.
-    //If Success: Replace Champion.
-    //Fill tableData with Views of Champion.
+    getUploadsPlaylist(page_name, function(response){
+      //Get Uploads since 30 days ago.
+      var uploads = response.items;
+      uploads = sortByDate(uploads);
+      var uploads_since = getUploadsSince(uploads, sinceDate);
+      //Set Call Counter.
+      var successful_call_counter = 0;
+      var num_uploads_since = uploads_since.length;
+      //Get Views of first Upload.
+      var video_id = uploads_since[0].contentDetails.videoId;
+      jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+        var statistics = response.items[0].statistics;
+        var view_count = parseInt(statistics.viewCount, 10);
+        //Set first Upload as Champion.
+        var view_count_champion = view_count;
+        var most_successful_video_id = video_id;
+        //Add to counter of successful Statistic Calls:
+        successful_call_counter++;
+        //Let other Videos challenge Champion:
+        for (i=1; i<num_uploads_since; i++) {
+          //Get Views of next Upload.
+          video_id = uploads_since[i].contentDetails.videoId;
+          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+            var statistics = response.items[0].statistics;
+            var view_count = parseInt(statistics.viewCount, 10);
+            //Add to counter of successful Statistic Calls:
+            successful_call_counter++;
+            //Challenge Champion.
+            var view_count_challenger = view_count;
+            //If Success: Replace Champion.
+            if (view_count_challenger > view_count_champion) {
+              view_count_champion = view_count_challenger;
+              most_successful_video_id = video_id;
+            }
+            //If all calls were successful:
+            if (successful_call_counter == num_uploads_since) {
+              //Fill tableData with Most Successful Video Views:
+              tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
+            };
+          });
+        };
+      });
+    });
   }
   
   function fillMost_Successful_Video_Likes(page_name, tableData) {
@@ -274,7 +310,8 @@ $(document).ready(function(){
     fillSubscriptions(wettbewerber[i], tableData);
     fillVideos_Count(wettbewerber[i], tableData);
     fillAvg_Views_per_Video(wettbewerber[i], tableData);
-    fillAvg_Likes_per_Video(wettbewerber[i], tableData)
+    fillAvg_Likes_per_Video(wettbewerber[i], tableData);
+    fillMost_Successful_Video_Views(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

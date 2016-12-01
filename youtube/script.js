@@ -20,6 +20,10 @@ $(document).ready(function(){
     return rounded.toFixed(precision);
   }
   
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+  
   function createTable(container_id, wettbewerber, kriterien) {
     var containerTable = document.getElementById(container_id);
     var table = document.createElement("table");
@@ -83,6 +87,7 @@ $(document).ready(function(){
   function fillSubscriptions(page_name, tableData){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
       var sub_count = response.items[0].statistics.subscriberCount;
+      sub_count = numberWithCommas(sub_count);
       tableData[page_name].Subscriptions.innerHTML = sub_count;
     }); 
   }
@@ -168,6 +173,7 @@ $(document).ready(function(){
               var avg_views_per_video = views_total / num_uploads_since;
               //Round Average Views per Video.
               var avg_views_per_video_rounded = round(avg_views_per_video, 0);
+              avg_views_per_video_rounded = numberWithCommas(avg_views_per_video_rounded);
               //Fill tableData with rounded Average View per Video.
               tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
             };
@@ -229,7 +235,7 @@ $(document).ready(function(){
       var num_uploads_since = uploads_since.length;
       //If no uploads:
       if (num_uploads_since == 0) {
-        tableData[page_name].Most_Successful_Video_Views.innerHTML = 0;
+        tableData[page_name].Most_Successful_Video_Views.innerHTML = "No Videos";
       } else {
         //Get Views of first Upload.
         var video_id = uploads_since[0].contentDetails.videoId;
@@ -243,6 +249,7 @@ $(document).ready(function(){
           successful_call_counter++;
           //If only 1 upload:
           if (num_uploads_since == 1) {
+            view_count_champion = numberWithCommas(view_count_champion);
             tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
           } else {
             //Let other Videos challenge Champion:
@@ -264,6 +271,7 @@ $(document).ready(function(){
                 //If all calls were successful:
                 if (successful_call_counter == num_uploads_since) {
                   //Fill tableData with Most Successful Video Views:
+                  view_count_champion = numberWithCommas(view_count_champion);
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
                 };
               });
@@ -321,6 +329,7 @@ $(document).ready(function(){
                 //If all calls were successful:
                 if (successful_call_counter == num_uploads_since) {
                   //Fill tableData with Most Successful Video Views:
+                  like_count_champion = numberWithCommas(like_count_champion);
                   tableData[page_name].Most_Successful_Video_Likes.innerHTML = like_count_champion;
                 };
               });
@@ -428,7 +437,7 @@ $(document).ready(function(){
               //Get Average Engagement Rate per Video.
               var avg_engagement_rate_per_video = engagement_total / views_total;
               //Round Average Engagement Rate per Video.
-              var avg_engagement_rate_per_video_rounded_perc = round(avg_engagement_rate_per_video*100, 1);
+              var avg_engagement_rate_per_video_rounded_perc = round(avg_engagement_rate_per_video*100, 3);
               //Fill tableData with Average Engagement Rate per Video.
               tableData[page_name].Avg_Engagement_Rate_per_Video.innerHTML = avg_engagement_rate_per_video_rounded_perc.toString() + "%";
             };
@@ -436,21 +445,6 @@ $(document).ready(function(){
         };
       }
     });
-    
-    //Get Uploads Playlist.
-    //Get Uploads since 30 days ago.
-    //Get Number of Uploads since 30 days ago.
-    //Get Views per uploaded Video.
-    //Add Views to views_total.
-    //Get Likes per uploaded Video.
-    //Add Likes to likes_total.
-    //Get Dislikes per uploaded Video.
-    //Add Dislikes to dislikes_total.
-    //Get Comments per uploaded Video.
-    //Add Comments to comments_total.
-    //Get Sum of likes_total, dislikes_total and comments_total.
-    //Divide sum_engagement by views_total.
-    //Fill tableData with Average Engagement Rate per Video.
   }
   
   //YouTube API:

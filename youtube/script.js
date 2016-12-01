@@ -369,9 +369,10 @@ $(document).ready(function(){
               jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
                 var sub_count = response.items[0].statistics.subscriberCount;
                 //Divide Average Views per Video by Subscriptions of Channel.
-                var avg_views_compared_subs = round(avg_views/sub_count, 0);
+                var avg_views_compared_subs = avg_views/sub_count;
+                var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 3);
                 //Fill tableData with Average Views compared to Subs.
-                tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs;
+                tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
               });
             };
           });

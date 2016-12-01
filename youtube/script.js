@@ -344,6 +344,7 @@ $(document).ready(function(){
       //If no uploads in last 30 days:
       if (num_uploads_since == 0) {
         avg_views = 0;
+        tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views;
       } else {
         //Get Views per uploaded Video.
         var views_total = 0;
@@ -368,11 +369,16 @@ $(document).ready(function(){
               //Get Subscriptions of Channel.
               jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
                 var sub_count = response.items[0].statistics.subscriberCount;
-                //Divide Average Views per Video by Subscriptions of Channel.
-                var avg_views_compared_subs = avg_views/sub_count;
-                var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 3);
-                //Fill tableData with Average Views compared to Subs.
-                tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
+                //If no Subscriptions:
+                if (sub_count==0) {
+                  tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = "No Subscriptions";
+                } else {
+                  //Divide Average Views per Video by Subscriptions of Channel.
+                  var avg_views_compared_subs = avg_views/sub_count;
+                  var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 3);
+                  //Fill tableData with Average Views compared to Subs.
+                  tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
+                }
               });
             };
           });

@@ -262,8 +262,11 @@ $(document).ready(function(){
       //If no uploads:
       if (num_uploads_since == 0) {
         tableData[page_name].Most_Successful_Video_Views.innerHTML = "No Videos";
-        //Append Video Player To div#details:
-        document.getElementById(page_name+"_details").innerHTML = "No Videos";
+        //Append Paragraph "No Videos" To div#details:
+        var para = document.createElement("p");
+        para.id = page_name+"_view_count";
+        para.innerHTML = "No Videos";
+        $("#"page_name+"_details").append(para);
       } else {
         //Get Views of first Upload.
         var video_id = uploads_since[0].contentDetails.videoId;

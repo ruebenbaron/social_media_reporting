@@ -532,7 +532,7 @@ $(document).ready(function(){
       console.log("Enter was pressed.");
       //Change td.ids to last wettbewerber
       for (x=0; x<kriterien.length; x++) {
-        var td = tableData[wettbewerber[wettbewerber.length-1]][kriterien[x]]
+        var td = tableData["new_competitor"][kriterien[x]]
         //Set Input Text As last wettbewerber:
         wettbewerber[wettbewerber.length-1] = $("#competitor_input").val()
         td.id = wettbewerber[wettbewerber.length-1] + "_" + kriterien[x];

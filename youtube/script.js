@@ -223,6 +223,22 @@ $(document).ready(function(){
     });
   }
   
+  function appendPageDiv(page_name) {
+    var div_page = document.createElement("div");
+    div_page.id = page_name + "_details";
+    $("#details").append(div_page);
+  }
+  
+  function appendEmbeddedVideo(video_id, element_id, parent_id) {
+    var div_ytapiplayer = document.createElement("div");
+    div_ytapiplayer.id = element_id;
+    $("#"+parent_id).append(div_ytapiplayer);
+    var params = { allowScriptAccess: "always" };
+    var atts = { id: "myytplayer" };
+    swfobject.embedSWF("http://www.youtube.com/v/"+video_id+"?enablejsapi=1&playerapiid=ytplayer&version=3",
+                       element_id, "425", "356", "8", null, null, params, atts);
+  }
+  
   function fillMost_Successful_Video_Views(page_name, tableData) {
     //Get Uploads Playlist.
     getUploadsPlaylist(page_name, function(response){
@@ -236,6 +252,9 @@ $(document).ready(function(){
       //If no uploads:
       if (num_uploads_since == 0) {
         tableData[page_name].Most_Successful_Video_Views.innerHTML = "No Videos";
+        //Append Video Player To div#details:
+        appendPageDiv(page_name);
+        document.getElementById(page_name+"_details").innerHTML = "No Videos";
       } else {
         //Get Views of first Upload.
         var video_id = uploads_since[0].contentDetails.videoId;
@@ -251,6 +270,9 @@ $(document).ready(function(){
           if (num_uploads_since == 1) {
             view_count_champion = numberWithCommas(view_count_champion);
             tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
+            //Append Video Player To div#details:
+            appendPageDiv(page_name);
+            appendEmbeddedVideo(video_id, "ytapiplayer", page_name+"_details");
           } else {
             //Let other Videos challenge Champion:
             for (i=1; i<num_uploads_since; i++) {
@@ -273,6 +295,9 @@ $(document).ready(function(){
                   //Fill tableData with Most Successful Video Views:
                   view_count_champion = numberWithCommas(view_count_champion);
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
+                  //Append Video Player To div#details:
+                  appendPageDiv(page_name);
+                  appendEmbeddedVideo(video_id, "ytapiplayer", page_name+"_details");
                 };
               });
             };

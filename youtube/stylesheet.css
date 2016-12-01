@@ -35,6 +35,20 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
+input {
+	display: block;
+	padding: 0; 
+	margin: 0; 
+	border: 0; 
+	width: 100%;
+	background-color: #ddd;
+	font-family: arial, sans-serif;
+}
+
+tr:last-child td {
+	margin: 0;
+}
+
 tr:nth-child(1n+3):hover {
   background-color: #cc181e;
   color: #fff;
@@ -44,3 +58,5 @@ tr:nth-child(2) {
   background-color: #E62117;
   color: #fff;
 }
+
+

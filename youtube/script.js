@@ -343,8 +343,7 @@ $(document).ready(function(){
       var num_uploads_since = uploads_since.length;
       //If no uploads in last 30 days:
       if (num_uploads_since == 0) {
-        avg_views = 0;
-        tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views;
+        tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = "No Videos";
       } else {
         //Get Views per uploaded Video.
         var views_total = 0;

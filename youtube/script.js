@@ -528,7 +528,8 @@ $(document).ready(function(){
   
   //If Enter Press in Input Field of Table:
   $("#competitor_input").keyup(function(event){
-    if(event.keyCode == 13){
+    if(event.which == 13){
+      console.log("Enter was pressed.");
       //Change td.ids to last wettbewerber
       for (x=0; x<kriterien.length; x++) {
         var td = tableData[wettbewerber[wettbewerber.length-1]][kriterien[x]]

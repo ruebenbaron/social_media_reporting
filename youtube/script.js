@@ -375,7 +375,7 @@ $(document).ready(function(){
                 } else {
                   //Divide Average Views per Video by Subscriptions of Channel.
                   var avg_views_compared_subs = avg_views/sub_count;
-                  var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 3);
+                  var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 1);
                   //Fill tableData with Average Views compared to Subs.
                   tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
                 }

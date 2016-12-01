@@ -539,7 +539,6 @@ $(document).ready(function(){
       }
       //Call YouTube Functions for last wettbewerber
       appendPageDiv(wettbewerber[wettbewerber.length]);
-      fillChannelName(wettbewerber[wettbewerber.length], tableData);
       fillSubscriptions(wettbewerber[wettbewerber.length], tableData);
       fillVideos_Count(wettbewerber[wettbewerber.length], tableData);
       fillAvg_Views_per_Video(wettbewerber[wettbewerber.length], tableData);

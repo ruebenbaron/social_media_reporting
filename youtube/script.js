@@ -229,6 +229,7 @@ $(document).ready(function(){
     $("#details").append(div_page);
     var header = document.createElement("h2");
     header.innerHTML = page_name;
+    $(div_page).append(header);
   }
   
   function appendEmbeddedVideo(video_id, element_id, parent_id) {

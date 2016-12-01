@@ -501,7 +501,7 @@ $(document).ready(function(){
   }
   
   //YouTube API:
-  for (i=0; i<wettbewerber.length; i++){
+  for (i=0; i<wettbewerber.length-1; i++){
     appendPageDiv(wettbewerber[i]);
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
@@ -539,6 +539,7 @@ $(document).ready(function(){
       }
       //Call YouTube Functions for last wettbewerber
       appendPageDiv(wettbewerber[wettbewerber.length]);
+      fillChannelName(wettbewerber[wettbewerber.length], tableData);
       fillSubscriptions(wettbewerber[wettbewerber.length], tableData);
       fillVideos_Count(wettbewerber[wettbewerber.length], tableData);
       fillAvg_Views_per_Video(wettbewerber[wettbewerber.length], tableData);

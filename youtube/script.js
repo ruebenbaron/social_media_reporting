@@ -387,6 +387,56 @@ $(document).ready(function(){
   }
   
   function fillAvg_Engagement_Rate_per_Video(page_name, tableData) {
+    var engagement_total = 0;
+    //Get Uploads Playlist.
+    getUploadsPlaylist(page_name, function(response){
+      //Get Uploads since 30 days ago.
+      var uploads = response.items;
+      uploads = sortByDate(uploads);
+      var uploads_since = getUploadsSince(uploads, sinceDate);
+      //Get Number of Uploads since 30 days ago.
+      var num_uploads_since = uploads_since.length;
+      //If no uploads in last 30 days:
+      if (num_uploads_since == 0) {
+        tableData[page_name].Avg_Engagement_Rate_per_Video.innerHTML = "No Videos";
+      } else {
+        //Get Views per uploaded Video.
+        var views_total = 0;
+        var likes_total = 0;
+        var dislikes_total = 0;
+        var comments_total = 0;
+        var successful_call_counter = 0;
+        for (i=0; i<uploads_since.length; i++){
+          var video_id = uploads_since[i].contentDetails.videoId;
+          jQuery.getJSON("https://www.googleapis.com/youtube/v3/videos?part=statistics&id="+video_id+"&key="+key, function handleVideoStatistics(response){
+            //Get Video Statistics
+            var statistics = response.items[0].statistics;
+            var view_count = parseInt(statistics.viewCount, 10);
+            var like_count = parseInt(statistics.likeCount, 10);
+            var dislike_count = parseInt(statistics.dislikeCount, 10);
+            var comment_count = parseInt(statistics.commentCount, 10);
+            //Add Stats to Total.
+            views_total += view_count;
+            likes_total += like_count;
+            dislikes_total += dislike_count;
+            comments_total += comment_count;
+            engagement_total = likes_total + dislikes_total + comments_total;
+            //Add to counter of successful Statistic Calls:
+            successful_call_counter++;
+            //If all calls were successful:
+            if (successful_call_counter == num_uploads_since) {
+              //Get Average Engagement Rate per Video.
+              var avg_engagement_rate_per_video = engagement_total / views_total;
+              //Round Average Engagement Rate per Video.
+              var avg_engagement_rate_per_video_rounded_perc = round(avg_engagement_rate_per_video*100, 1);
+              //Fill tableData with Average Engagement Rate per Video.
+              tableData[page_name].Avg_Engagement_Rate_per_Video.innerHTML = avg_engagement_rate_per_video_rounded_perc.toString() + "%";
+            };
+          });
+        };
+      }
+    });
+    
     //Get Uploads Playlist.
     //Get Uploads since 30 days ago.
     //Get Number of Uploads since 30 days ago.
@@ -413,6 +463,7 @@ $(document).ready(function(){
     fillMost_Successful_Video_Views(wettbewerber[i], tableData);
     fillMost_Successful_Video_Likes(wettbewerber[i], tableData);
     fillAvg_Views_compared_to_Subs(wettbewerber[i], tableData);
+    fillAvg_Engagement_Rate_per_Video(wettbewerber[i], tableData);
   };
   
   var btnDetails = $("#btnDetails");

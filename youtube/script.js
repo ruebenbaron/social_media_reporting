@@ -539,16 +539,16 @@ $(document).ready(function(){
         td.className = wettbewerber[wettbewerber.length-1] + " " + kriterien[x]; 
       }
       //Call YouTube Functions for last wettbewerber
-      appendPageDiv(wettbewerber[wettbewerber.length]);
-      fillChannelName(wettbewerber[wettbewerber.length], tableData);
-      fillSubscriptions(wettbewerber[wettbewerber.length], tableData);
-      fillVideos_Count(wettbewerber[wettbewerber.length], tableData);
-      fillAvg_Views_per_Video(wettbewerber[wettbewerber.length], tableData);
-      fillAvg_Likes_per_Video(wettbewerber[wettbewerber.length], tableData);
-      fillMost_Successful_Video_Views(wettbewerber[wettbewerber.length], tableData);
-      fillMost_Successful_Video_Likes(wettbewerber[wettbewerber.length], tableData);
-      fillAvg_Views_compared_to_Subs(wettbewerber[wettbewerber.length], tableData);
-      fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length], tableData);
+      appendPageDiv(wettbewerber[wettbewerber.length-1]);
+      fillChannelName(wettbewerber[wettbewerber.length-1], tableData);
+      fillSubscriptions(wettbewerber[wettbewerber.length-1], tableData);
+      fillVideos_Count(wettbewerber[wettbewerber.length-1], tableData);
+      fillAvg_Views_per_Video(wettbewerber[wettbewerber.length-1], tableData);
+      fillAvg_Likes_per_Video(wettbewerber[wettbewerber.length-1], tableData);
+      fillMost_Successful_Video_Views(wettbewerber[wettbewerber.length-1], tableData);
+      fillMost_Successful_Video_Likes(wettbewerber[wettbewerber.length-1], tableData);
+      fillAvg_Views_compared_to_Subs(wettbewerber[wettbewerber.length-1], tableData);
+      fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length-1], tableData);
       //Add "new_competitor" to wettbewerber
       wettbewerber.push("new_competitor");
       //Add tr with input field to table

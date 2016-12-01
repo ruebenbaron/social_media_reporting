@@ -227,6 +227,8 @@ $(document).ready(function(){
     var div_page = document.createElement("div");
     div_page.id = page_name + "_details";
     $("#details").append(div_page);
+    var header = document.createElement("h2");
+    header.innerHTML = page_name;
   }
   
   function appendEmbeddedVideo(video_id, element_id, parent_id) {
@@ -237,6 +239,13 @@ $(document).ready(function(){
     ifrm.setAttribute("frameborder", "0");
     ifrm.id = element_id;
     $("#"+parent_id).append(ifrm);
+  }
+  
+  function appendViewCount(view_count, element_id, parent_id) {
+    var para = document.createElement("p");
+    para.id = element_id;
+    para.innerHTML = "Views: " + view_count;
+    $("#"+parent_id).append(para);
   }
   
   function fillMost_Successful_Video_Views(page_name, tableData) {
@@ -253,7 +262,6 @@ $(document).ready(function(){
       if (num_uploads_since == 0) {
         tableData[page_name].Most_Successful_Video_Views.innerHTML = "No Videos";
         //Append Video Player To div#details:
-        appendPageDiv(page_name);
         document.getElementById(page_name+"_details").innerHTML = "No Videos";
       } else {
         //Get Views of first Upload.
@@ -271,8 +279,8 @@ $(document).ready(function(){
             view_count_champion = numberWithCommas(view_count_champion);
             tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
             //Append Video Player To div#details:
-            appendPageDiv(page_name);
-            appendEmbeddedVideo(video_id, page_name+"ytapiplayer", page_name+"_details");
+            appendEmbeddedVideo(video_id, page_name+"_ytapiplayer", page_name+"_details");
+            appendViewCount(view_count_champion, page_name+"_view_count", page_name+"_details")
           } else {
             //Let other Videos challenge Champion:
             for (i=1; i<num_uploads_since; i++) {
@@ -296,8 +304,8 @@ $(document).ready(function(){
                   view_count_champion = numberWithCommas(view_count_champion);
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
                   //Append Video Player To div#details:
-                  appendPageDiv(page_name);
-                  appendEmbeddedVideo(video_id, page_name+"ytapiplayer", page_name+"_details");
+                  appendEmbeddedVideo(video_id, page_name+"_ytapiplayer", page_name+"_details");
+                  appendViewCount(view_count_champion, page_name+"_view_count", page_name+"_details")
                 };
               });
             };
@@ -474,6 +482,7 @@ $(document).ready(function(){
   
   //YouTube API:
   for (i=0; i<wettbewerber.length; i++){
+    appendPageDiv(wettbewerber[i]);
     fillChannelName(wettbewerber[i], tableData);
     fillSubscriptions(wettbewerber[i], tableData);
     fillVideos_Count(wettbewerber[i], tableData);

@@ -1,7 +1,7 @@
 $(document).ready(function(){
   
   //Analyse-Daten:
-  var wettbewerber = ["vwfsde", "ingdiba", "comdirect", "FidorCommBanking", "DeutscheKreditbankAG", "CortalConsorsDe", "CommerzbankPrivat", "DeutscheBankGruppe", "ally", "barclaysonline"];
+  var wettbewerber = ["vwfsde", "ingdiba", "comdirect", "FidorCommBanking", "DeutscheKreditbankAG", "CortalConsorsDe", "CommerzbankPrivat", "DeutscheBankGruppe", "ally", "barclaysonline", "new_competitor"];
   var kriterien = ["Channel", "Subscriptions", "Videos_Count", "Avg_Views_per_Video", "Avg_Likes_per_Video", "Most_Successful_Video_Views", "Most_Successful_Video_Likes", "Avg_Views_compared_to_Subs", "Avg_Engagement_Rate_per_Video"];
   
   //API-Daten:
@@ -48,6 +48,21 @@ $(document).ready(function(){
             th.innerHTML = kriterien[x];
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
+            break;
+          case wettbewerber.length:
+            var td = document.createElement("td");
+            td.id = wettbewerber[i-1] + "_" + kriterien[x];
+            td.className = wettbewerber[i-1] + " " + kriterien[x];
+            if(x>0){
+              td.className += " number";
+            } else {
+              var input = document.createElement("input");
+              input.id = "competitor_input";
+              input.setAttribute("type", "text");
+              td.appendChild(input);
+            }
+            tr.appendChild(td);
+            tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
             var td = document.createElement("td");
@@ -500,14 +515,60 @@ $(document).ready(function(){
   };
   
   var btnDetails = $("#btnDetails");
-    var divDetails = $("#details");
-    btnDetails.text("Show Details");
-    btnDetails.click(function() {
-      divDetails.toggle();
-      if(divDetails.is(":visible")){
-        btnDetails.text("Hide Details");
-      } else {
-        btnDetails.text("Show Details");
+  var divDetails = $("#details");
+  btnDetails.text("Show Details");
+  btnDetails.click(function() {
+    divDetails.toggle();
+    if(divDetails.is(":visible")){
+      btnDetails.text("Hide Details");
+    } else {
+      btnDetails.text("Show Details");
+    }
+  });
+  
+  //If Enter Press in Input Field of Table:
+  $("#competitor_input").keyup(function(event){
+    if(event.keyCode == 13){
+      //Change td.ids to last wettbewerber
+      for (x=0; x<kriterien.length; x++) {
+        var td = tableData[wettbewerber[wettbewerber.length-1]][kriterien[x]]
+        //Set Input Text As last wettbewerber:
+        wettbewerber[wettbewerber.length-1] = $("#competitor_input").val()
+        td.id = wettbewerber[wettbewerber.length-1] + "_" + kriterien[x];
+        td.className = wettbewerber[wettbewerber.length-1] + " " + kriterien[x]; 
       }
-    });
+      //Call YouTube Functions for last wettbewerber
+      appendPageDiv(wettbewerber[wettbewerber.length]);
+      fillChannelName(wettbewerber[wettbewerber.length], tableData);
+      fillSubscriptions(wettbewerber[wettbewerber.length], tableData);
+      fillVideos_Count(wettbewerber[wettbewerber.length], tableData);
+      fillAvg_Views_per_Video(wettbewerber[wettbewerber.length], tableData);
+      fillAvg_Likes_per_Video(wettbewerber[wettbewerber.length], tableData);
+      fillMost_Successful_Video_Views(wettbewerber[wettbewerber.length], tableData);
+      fillMost_Successful_Video_Likes(wettbewerber[wettbewerber.length], tableData);
+      fillAvg_Views_compared_to_Subs(wettbewerber[wettbewerber.length], tableData);
+      fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length], tableData);
+      //Add "new_competitor" to wettbewerber
+      wettbewerber.push("new_competitor");
+      //Add tr with input field to table
+      var table = document.getElementById("dashboard");
+      var tr = document.createElement("tr")
+      for (x=0; x<kriterien.length; x++){
+        var td = document.createElement("td");
+        td.id = wettbewerber[wettbewerber.length-1] + "_" + kriterien[x];
+        td.className = wettbewerber[wettbewerber.length-1] + " " + kriterien[x];
+        if(x>0){
+          td.className += " number";
+        } else {
+          var input = document.createElement("input");
+          input.id = "competitor_input";
+          input.setAttribute("type", "text");
+          td.appendChild(input);
+        }
+        tr.appendChild(td);
+        tableData[wettbewerber[wettbewerber.length-1]][kriterien[x]] = td;
+      }
+    }
+  });
+  
 });

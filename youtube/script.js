@@ -230,13 +230,13 @@ $(document).ready(function(){
   }
   
   function appendEmbeddedVideo(video_id, element_id, parent_id) {
-    var div_ytapiplayer = document.createElement("div");
-    div_ytapiplayer.id = element_id;
-    $("#"+parent_id).append(div_ytapiplayer);
-    var params = { allowScriptAccess: "always" };
-    var atts = { id: "myytplayer" };
-    swfobject.embedSWF("http://www.youtube.com/v/"+video_id+"?enablejsapi=1&playerapiid=ytplayer&version=3",
-                       element_id, "425", "356", "8", null, null, params, atts);
+    var ifrm = document.createElement("iframe");
+    ifrm.setAttribute("src", "https://www.youtube.com/embed/"+video_id);
+    ifrm.setAttribute("width", "560");
+    ifrm.setAttribute("height", "315");
+    ifrm.setAttribute("frameborder", "0");
+    ifrm.id = element_id;
+    $("#"+parent_id).append(ifrm);
   }
   
   function fillMost_Successful_Video_Views(page_name, tableData) {
@@ -272,7 +272,7 @@ $(document).ready(function(){
             tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
             //Append Video Player To div#details:
             appendPageDiv(page_name);
-            appendEmbeddedVideo(video_id, "ytapiplayer", page_name+"_details");
+            appendEmbeddedVideo(video_id, page_name+"ytapiplayer", page_name+"_details");
           } else {
             //Let other Videos challenge Champion:
             for (i=1; i<num_uploads_since; i++) {
@@ -297,7 +297,7 @@ $(document).ready(function(){
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
                   //Append Video Player To div#details:
                   appendPageDiv(page_name);
-                  appendEmbeddedVideo(video_id, "ytapiplayer", page_name+"_details");
+                  appendEmbeddedVideo(video_id, page_name+"ytapiplayer", page_name+"_details");
                 };
               });
             };

@@ -535,6 +535,7 @@ $(document).ready(function(){
         //If User enters existing Channel Name:
         $("#competitor_input").blur();
         alert("Dieser Channel ist in der Tabelle bereits enthalten.");
+        $("#competitor_input").focus();
       } else {
         //If User enters new Channel Name:
         //Change td.ids to last wettbewerber

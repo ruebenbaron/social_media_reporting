@@ -536,12 +536,13 @@ $(document).ready(function(){
         //Set Input Text As last wettbewerber:
         var new_input = $("#competitor_input").val()
         wettbewerber[wettbewerber.length-1] = new_input
-        td.id = wettbewerber[wettbewerber.length-1] + "_" + kriterien[x];
-        td.className = wettbewerber[wettbewerber.length-1] + " " + kriterien[x];
+        td.id = new_input + "_" + kriterien[x];
+        td.className = new_input + " " + kriterien[x];
       }
       //Correct tableData Object:
       if (tableData.hasOwnProperty(new_input) == false){
         tableData[new_input] = tableData["new_competitor"];
+        delete tableData["new_competitor"]
       }
       //Call YouTube Functions for last wettbewerber
       appendPageDiv(wettbewerber[wettbewerber.length-1]);

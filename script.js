@@ -340,6 +340,71 @@ $(document).ready(function(){
                 fillAvg_Likes_per_Post(wettbewerber[i], tableData);
                 fillAvg_Engagement_Rate_per_Post(wettbewerber[i], tableData);
               };
+              //If Enter Press in Input Field of Table:
+              $(document).on("keyup", "#competitor_input", function(event){
+              //$("#competitor_input").keyup(function(event){
+                if(event.which == 13){
+                  var new_input = $("#competitor_input").val()
+                  if (tableData.hasOwnProperty(new_input)){
+                    //If User enters existing Channel Name:
+                    $("#competitor_input").blur();
+                    alert("Dieser Channel ist in der Tabelle bereits enthalten.");
+                  } else {
+                    //If User enters new Channel Name:
+                    //Change td.ids to last wettbewerber
+                    for (x=0; x<kriterien.length; x++) {
+                      var td = tableData["new_competitor"][kriterien[x]]
+                      //Set Input Text As last wettbewerber:
+                      wettbewerber[wettbewerber.length-1] = new_input
+                      td.id = new_input + "_" + kriterien[x];
+                      td.className = new_input + " " + kriterien[x];
+                      if(x>0){
+                        td.className += " number";
+                      }
+                    }
+                    //Correct tableData Object:
+                    tableData[new_input] = tableData["new_competitor"];
+                    delete tableData["new_competitor"]
+                    //Call YouTube Functions for last wettbewerber
+                    createPageDiv(wettbewerber[wettbewerber.length-1]);
+                    appendHeader(wettbewerber[wettbewerber.length-1], wettbewerber[wettbewerber.length-1]);
+                    appendFanCount(wettbewerber[wettbewerber.length-1]);
+                    appendPostCount(wettbewerber[wettbewerber.length-1]);
+                    appendMostSuccessfulPost(wettbewerber[wettbewerber.length-1]);
+                    fillPage(wettbewerber[wettbewerber.length-1], tableData);
+                    fillFanCount(wettbewerber[wettbewerber.length-1], tableData);
+                    fillPosts_Count(wettbewerber[wettbewerber.length-1], tableData);
+                    fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
+                    fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+                    fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+                    //Add "new_competitor" to wettbewerber
+                    var new_arr_element = "new_competitor"
+                    wettbewerber.push(new_arr_element);
+                    //Update tableData Object:
+                    tableData[new_arr_element] = {};
+                    //Add tr with input field to table
+                    var table = document.getElementById("dashboard");
+                    var tr = document.createElement("tr")
+                    for (x=0; x<kriterien.length; x++){
+                      var td = document.createElement("td");
+                      td.id = new_arr_element + "_" + kriterien[x];
+                      td.className = new_arr_element + " " + kriterien[x];
+                      if(x>0){
+                        td.className += " number";
+                      } else {
+                        var input = document.createElement("input");
+                        input.id = "competitor_input";
+                        input.setAttribute("type", "text");
+                        td.appendChild(input);
+                      }
+                      tr.appendChild(td);
+                      tableData[new_arr_element][kriterien[x]] = td;
+                    }
+                    table.appendChild(tr);
+                    input.focus();
+                  }
+                }
+              });
             }
           });
         } else if (response.status === 'not_authorized') {
@@ -355,71 +420,7 @@ $(document).ready(function(){
     
   };
   
-  //If Enter Press in Input Field of Table:
-  $(document).on("keyup", "#competitor_input", function(event){
-  //$("#competitor_input").keyup(function(event){
-    if(event.which == 13){
-      var new_input = $("#competitor_input").val()
-      if (tableData.hasOwnProperty(new_input)){
-        //If User enters existing Channel Name:
-        $("#competitor_input").blur();
-        alert("Dieser Channel ist in der Tabelle bereits enthalten.");
-      } else {
-        //If User enters new Channel Name:
-        //Change td.ids to last wettbewerber
-        for (x=0; x<kriterien.length; x++) {
-          var td = tableData["new_competitor"][kriterien[x]]
-          //Set Input Text As last wettbewerber:
-          wettbewerber[wettbewerber.length-1] = new_input
-          td.id = new_input + "_" + kriterien[x];
-          td.className = new_input + " " + kriterien[x];
-          if(x>0){
-            td.className += " number";
-          }
-        }
-        //Correct tableData Object:
-        tableData[new_input] = tableData["new_competitor"];
-        delete tableData["new_competitor"]
-        //Call YouTube Functions for last wettbewerber
-        createPageDiv(wettbewerber[wettbewerber.length-1]);
-        appendHeader(wettbewerber[wettbewerber.length-1], wettbewerber[wettbewerber.length-1]);
-        appendFanCount(wettbewerber[wettbewerber.length-1]);
-        appendPostCount(wettbewerber[wettbewerber.length-1]);
-        appendMostSuccessfulPost(wettbewerber[wettbewerber.length-1]);
-        fillPage(wettbewerber[wettbewerber.length-1], tableData);
-        fillFanCount(wettbewerber[wettbewerber.length-1], tableData);
-        fillPosts_Count(wettbewerber[wettbewerber.length-1], tableData);
-        fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
-        fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
-        fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
-        //Add "new_competitor" to wettbewerber
-        var new_arr_element = "new_competitor"
-        wettbewerber.push(new_arr_element);
-        //Update tableData Object:
-        tableData[new_arr_element] = {};
-        //Add tr with input field to table
-        var table = document.getElementById("dashboard");
-        var tr = document.createElement("tr")
-        for (x=0; x<kriterien.length; x++){
-          var td = document.createElement("td");
-          td.id = new_arr_element + "_" + kriterien[x];
-          td.className = new_arr_element + " " + kriterien[x];
-          if(x>0){
-            td.className += " number";
-          } else {
-            var input = document.createElement("input");
-            input.id = "competitor_input";
-            input.setAttribute("type", "text");
-            td.appendChild(input);
-          }
-          tr.appendChild(td);
-          tableData[new_arr_element][kriterien[x]] = td;
-        }
-        table.appendChild(tr);
-        input.focus();
-      }
-    }
-  });
+  
   
   (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];

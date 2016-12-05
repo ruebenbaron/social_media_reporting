@@ -326,7 +326,6 @@ $(document).ready(function(){
           FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
               //console.log(response.authResponse.accessToken);
-              $("#fb-logout").show();
               var access_token = response.authResponse.accessToken;
               for (i = 0; i < wettbewerber.length - 1; i++) {
                 createPageDiv(wettbewerber[i]);

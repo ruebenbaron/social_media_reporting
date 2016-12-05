@@ -538,6 +538,9 @@ $(document).ready(function(){
         wettbewerber[wettbewerber.length-1] = new_input
         td.id = new_input + "_" + kriterien[x];
         td.className = new_input + " " + kriterien[x];
+        if(x>0){
+          td.className += " number";
+        }
       }
       //Correct tableData Object:
       if (tableData.hasOwnProperty(new_input) == false){
@@ -556,14 +559,15 @@ $(document).ready(function(){
       fillAvg_Views_compared_to_Subs(wettbewerber[wettbewerber.length-1], tableData);
       fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length-1], tableData);
       //Add "new_competitor" to wettbewerber
-      wettbewerber.push("new_competitor");
+      var new_arr_element = "new_competitor"
+      wettbewerber.push(new_arr_element);
       //Add tr with input field to table
       var table = document.getElementById("dashboard");
       var tr = document.createElement("tr")
       for (x=0; x<kriterien.length; x++){
         var td = document.createElement("td");
-        td.id = wettbewerber[wettbewerber.length-1] + "_" + kriterien[x];
-        td.className = wettbewerber[wettbewerber.length-1] + " " + kriterien[x];
+        td.id = new_arr_element + "_" + kriterien[x];
+        td.className = new_arr_element + " " + kriterien[x];
         if(x>0){
           td.className += " number";
         } else {
@@ -573,8 +577,9 @@ $(document).ready(function(){
           td.appendChild(input);
         }
         tr.appendChild(td);
-        tableData[wettbewerber[wettbewerber.length-1]][kriterien[x]] = td;
+        tableData[wettbewerber[new_arr_element]][kriterien[x]] = td;
       }
+      table.appendChild(tr);
     }
   });
   

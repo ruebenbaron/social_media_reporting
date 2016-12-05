@@ -26,26 +26,22 @@ $(document).ready(function(){
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
   
-  function createTable(container, wettbewerber, kriterien) {
-    var containerTable = document.getElementById(container);
+  function createTable(container_id, wettbewerber, kriterien) {
+    var containerTable = document.getElementById(container_id);
     var table = document.createElement("table");
     table.id = "dashboard";
     table.className = "table";
     table.className += " table-striped table-hover";
     containerTable.appendChild(table);
-
     var tableData = {};
     tableData.header = {};
     for (i=0; i<wettbewerber.length; i++) {
       tableData[wettbewerber[i]] = {};
     };
-
-
     for (i=0; i<=wettbewerber.length; i++) {
       var tr = document.createElement("tr");
       tr.id = i;
       table.appendChild(tr);
-
       for (x=0; x<kriterien.length; x++) {
         switch (i) {
           case 0:
@@ -54,6 +50,21 @@ $(document).ready(function(){
             th.innerHTML = kriterien[x];
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
+            break;
+          case wettbewerber.length:
+            var td = document.createElement("td");
+            td.id = wettbewerber[i-1] + "_" + kriterien[x];
+            td.className = wettbewerber[i-1] + " " + kriterien[x];
+            if(x>0){
+              td.className += " number";
+            } else {
+              var input = document.createElement("input");
+              input.id = "competitor_input";
+              input.setAttribute("type", "text");
+              td.appendChild(input);
+            }
+            tr.appendChild(td);
+            tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
             var td = document.createElement("td");
@@ -69,7 +80,6 @@ $(document).ready(function(){
         }
       };
     };
-    
     return tableData;
   }
   
@@ -344,6 +354,72 @@ $(document).ready(function(){
     })
     
   };
+  
+  //If Enter Press in Input Field of Table:
+  $(document).on("keyup", "#competitor_input", function(event){
+  //$("#competitor_input").keyup(function(event){
+    if(event.which == 13){
+      var new_input = $("#competitor_input").val()
+      if (tableData.hasOwnProperty(new_input)){
+        //If User enters existing Channel Name:
+        $("#competitor_input").blur();
+        alert("Dieser Channel ist in der Tabelle bereits enthalten.");
+      } else {
+        //If User enters new Channel Name:
+        //Change td.ids to last wettbewerber
+        for (x=0; x<kriterien.length; x++) {
+          var td = tableData["new_competitor"][kriterien[x]]
+          //Set Input Text As last wettbewerber:
+          wettbewerber[wettbewerber.length-1] = new_input
+          td.id = new_input + "_" + kriterien[x];
+          td.className = new_input + " " + kriterien[x];
+          if(x>0){
+            td.className += " number";
+          }
+        }
+        //Correct tableData Object:
+        tableData[new_input] = tableData["new_competitor"];
+        delete tableData["new_competitor"]
+        //Call YouTube Functions for last wettbewerber
+        createPageDiv(wettbewerber[wettbewerber.length-1]);
+        appendHeader(wettbewerber[wettbewerber.length-1], wettbewerber[wettbewerber.length-1]);
+        appendFanCount(wettbewerber[wettbewerber.length-1]);
+        appendPostCount(wettbewerber[wettbewerber.length-1]);
+        appendMostSuccessfulPost(wettbewerber[wettbewerber.length-1]);
+        fillPage(wettbewerber[wettbewerber.length-1], tableData);
+        fillFanCount(wettbewerber[wettbewerber.length-1], tableData);
+        fillPosts_Count(wettbewerber[wettbewerber.length-1], tableData);
+        fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
+        fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+        fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+        //Add "new_competitor" to wettbewerber
+        var new_arr_element = "new_competitor"
+        wettbewerber.push(new_arr_element);
+        //Update tableData Object:
+        tableData[new_arr_element] = {};
+        //Add tr with input field to table
+        var table = document.getElementById("dashboard");
+        var tr = document.createElement("tr")
+        for (x=0; x<kriterien.length; x++){
+          var td = document.createElement("td");
+          td.id = new_arr_element + "_" + kriterien[x];
+          td.className = new_arr_element + " " + kriterien[x];
+          if(x>0){
+            td.className += " number";
+          } else {
+            var input = document.createElement("input");
+            input.id = "competitor_input";
+            input.setAttribute("type", "text");
+            td.appendChild(input);
+          }
+          tr.appendChild(td);
+          tableData[new_arr_element][kriterien[x]] = td;
+        }
+        table.appendChild(tr);
+        input.focus();
+      }
+    }
+  });
   
   (function(d, s, id){
     var js, fjs = d.getElementsByTagName(s)[0];

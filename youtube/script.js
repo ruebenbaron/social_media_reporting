@@ -577,7 +577,7 @@ $(document).ready(function(){
           td.appendChild(input);
         }
         tr.appendChild(td);
-        tableData[wettbewerber[new_arr_element]][kriterien[x]] = td;
+        tableData[new_arr_element][kriterien[x]] = td;
       }
       table.appendChild(tr);
     }

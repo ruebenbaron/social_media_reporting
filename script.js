@@ -325,7 +325,8 @@ $(document).ready(function(){
           loginStatus.text("Succesfully logged in.");
           FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
-              console.log(response.authResponse.accessToken);
+              //console.log(response.authResponse.accessToken);
+              $("#fb-logout").show();
               var access_token = response.authResponse.accessToken;
               for (i = 0; i < wettbewerber.length - 1; i++) {
                 createPageDiv(wettbewerber[i]);
@@ -415,6 +416,13 @@ $(document).ready(function(){
           // they are logged into this app or not.
           loginStatus.text("Please login.");
         }
+      });
+    })
+    
+    $("#fb-logout").click(function(){
+      FB.logout(function (response) {
+          //Do what ever you want here when logged out like reloading the page
+          window.location.reload();
       });
     })
     

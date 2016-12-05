@@ -160,16 +160,18 @@ $(document).ready(function(){
       {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
-        //First champion is the latest post:
-        var likes_count_champion = posts[0].likes.summary.total_count;
-        var mostSuccessfulPostID = posts[0].id;
+        //First champion is 0:
+        var likes_count_champion = 0;
+        var mostSuccessfulPostID = "";
         //Compare succeeding posts to first post:
-        for (i=1; i<posts.length;i++){
-          var likes_count_challenger = posts[i].likes.summary.total_count;
-          if (likes_count_challenger > likes_count_champion){
-            likes_count_champion = likes_count_challenger;
-            mostSuccessfulPostID = posts[i].id;
-          };
+        for (i=0; i<posts.length;i++){
+          if (posts[i].hasOwnProperty("likes")){
+            var likes_count_challenger = posts[i].likes.summary.total_count;
+            if (likes_count_challenger > likes_count_champion){
+              likes_count_champion = likes_count_challenger;
+              mostSuccessfulPostID = posts[i].id;
+            };
+          }
         };
         appendParagraph(page_name, "Most Successful Post-ID: " + mostSuccessfulPostID + " (" + numberWithCommas(likes_count_champion) + " likes)");
         appendPostInfo(page_name, mostSuccessfulPostID);
@@ -213,16 +215,19 @@ $(document).ready(function(){
       {"fields":"likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
-        //First champion is the latest post:
-        var likes_count_champion = posts[0].likes.summary.total_count;
-        var mostSuccessfulPostID = posts[0].id;
-        //Compare succeeding posts to first post:
-        for (var i=1; i<posts.length;i++){
-          var likes_count_challenger = posts[i].likes.summary.total_count;
-          if (likes_count_challenger > likes_count_champion){
-            likes_count_champion = likes_count_challenger;
-            mostSuccessfulPostID = posts[i].id;
-          };
+        //First champion is 0:
+        var likes_count_champion = 0;
+        var mostSuccessfulPostID = "";
+        //Compare posts to champion:
+        for (var i=0; i<posts.length;i++){
+          //If Post has Likes:
+          if (posts[i].hasOwnProperty("likes")) {
+            var likes_count_challenger = posts[i].likes.summary.total_count;
+            if (likes_count_challenger > likes_count_champion){
+              likes_count_champion = likes_count_challenger;
+              mostSuccessfulPostID = posts[i].id;
+            };
+          }
         };
         //Fill Table:
         tableData[page_name].Most_Successful_Post_Likes.innerHTML = numberWithCommas(likes_count_champion);
@@ -243,7 +248,10 @@ $(document).ready(function(){
         var sum_likes = 0;
         var sum_posts = posts.length;
         for (i=0; i<sum_posts;i++) {
-          sum_likes += posts[i].likes.summary.total_count;
+          //If Post has Likes
+          if (posts[i].hasOwnProperty("likes")) {
+            sum_likes += posts[i].likes.summary.total_count;
+          }
         };
         var avg_likes = sum_likes/sum_posts;
         var rounded_avg_likes = round(avg_likes, 1);

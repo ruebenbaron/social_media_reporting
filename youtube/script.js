@@ -589,7 +589,7 @@ $(document).ready(function(){
 });
 
 //If Enter Press in Input Field of Table:
-$("#competitor_input").on("keyup", function(event){
+$(document).on("keyup", "#competitor_input", function(event){
 //$("#competitor_input").keyup(function(event){
   if(event.which == 13){
     console.log("Enter was pressed.");

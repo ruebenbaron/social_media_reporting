@@ -21,7 +21,7 @@ h1 {
   background-color: #365899;
 }
 
-#details, #hideDetails {
+#details, #hideDetails, #fb-logout {
   display: none;
 }
 
@@ -57,7 +57,9 @@ tr:nth-child(2) {
   color: #fff;
 }
 
-
+input {
+	color: rgb(51, 51, 51);
+}
 
 .fb-post span, .fb-post iframe {
   min-width: 700px !important;

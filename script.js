@@ -327,7 +327,7 @@ $(document).ready(function(){
             if (response.status === 'connected') {
               console.log(response.authResponse.accessToken);
               var access_token = response.authResponse.accessToken;
-              for (i = 0; i < wettbewerber.length; i++) {
+              for (i = 0; i < wettbewerber.length - 1; i++) {
                 createPageDiv(wettbewerber[i]);
                 appendHeader(wettbewerber[i], wettbewerber[i]);
                 appendFanCount(wettbewerber[i]);

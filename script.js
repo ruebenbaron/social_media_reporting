@@ -196,6 +196,7 @@ $(document).ready(function(){
   }
   
   function fillMost_Successful_Post_Likes(page_name, tableData){
+    //FEHLER: Liefert für ersten und letzten Wettbewerber kein Ergebnis.
     FB.api(
       '/' + page_name + '/posts',
       'GET',
@@ -206,7 +207,7 @@ $(document).ready(function(){
         var likes_count_champion = posts[0].likes.summary.total_count;
         var mostSuccessfulPostID = posts[0].id;
         //Compare succeeding posts to first post:
-        for (i=1; i<posts.length;i++){
+        for (var i=1; i<posts.length;i++){
           var likes_count_challenger = posts[i].likes.summary.total_count;
           if (likes_count_challenger > likes_count_champion){
             likes_count_champion = likes_count_challenger;
@@ -222,6 +223,7 @@ $(document).ready(function(){
   
   
   function fillAvg_Likes_per_Post(page_name, tableData){
+    //FEHLER: Liefert für ersten und letzten Wettbewerber kein Ergebnis.
     FB.api(
       '/' + page_name + '/posts',
       'GET',

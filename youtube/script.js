@@ -561,6 +561,8 @@ $(document).ready(function(){
       //Add "new_competitor" to wettbewerber
       var new_arr_element = "new_competitor"
       wettbewerber.push(new_arr_element);
+      //Update tableData Object:
+      tableData[new_arr_element] = {};
       //Add tr with input field to table
       var table = document.getElementById("dashboard");
       var tr = document.createElement("tr")

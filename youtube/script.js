@@ -229,6 +229,7 @@ $(document).ready(function(){
               var avg_likes_per_video = likes_total / num_uploads_since;
               //Round Average Likes per Video.
               var avg_likes_per_video_rounded = round(avg_likes_per_video, 1);
+              avg_likes_per_video_rounded = numberWithCommas(avg_likes_per_video_rounded);
               //Fill tableData with rounded Average Likes per Video.
               tableData[page_name].Avg_Likes_per_Video.innerHTML = avg_likes_per_video_rounded;
             };

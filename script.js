@@ -331,7 +331,7 @@ $(document).ready(function(){
         if (response.status === 'connected') {
           // Logged into your app and Facebook.
           loginStatus.text("Succesfully logged in.");
-          btnFB.text("Refresh");
+          btnFB.text("Get Data");
           FB.getLoginStatus(function(response) {
             if (response.status === 'connected') {
               //console.log(response.authResponse.accessToken);

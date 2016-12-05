@@ -199,7 +199,7 @@ $(document).ready(function(){
     FB.api(
       '/' + page_name + '/posts',
       'GET',
-      {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
+      {"fields":"likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
         //First champion is the latest post:
@@ -225,7 +225,7 @@ $(document).ready(function(){
     FB.api(
       '/' + page_name + '/posts',
       'GET',
-      {"fields":"message,likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
+      {"fields":"likes.limit(0).summary(1)","since":sinceDate,"until":untilDate, "access_token":access_token},
       function(response) {
         var posts = response.data;
         var sum_likes = 0;

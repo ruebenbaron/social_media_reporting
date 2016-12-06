@@ -29,7 +29,7 @@ h1 {
 	padding: 0px;
 }
 
-td, th {
+td, th, thead {
     border: 1px solid #dddddd;
     padding: 8px;
 }
@@ -46,19 +46,30 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 
-tr:nth-child(1n+3):hover {
+input {
+	display: block;
+	padding: 0; 
+	margin: 0; 
+	border: 0; 
+	width: 100%;
+	background-color: #ddd;
+	font-family: arial, sans-serif;
+	color: rgb(51, 51, 51);
+}
+
+td input {
+	margin: 0;
+}
+
+tbody tr:nth-child(n):hover {
   background-color: #70B3FF;
   color: #fff;
 }
 
-tr:nth-child(2) {
-  border-color: #405893;
-  background-color: #4862A3;
-  color: #fff;
-}
-
-input {
-	color: rgb(51, 51, 51);
+.vwfsde {
+	border-color: #405893;
+  	background-color: #4862A3;
+  	color: #fff;
 }
 
 .fb-post span, .fb-post iframe {

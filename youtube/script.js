@@ -10,11 +10,10 @@ $(document).ready(function(){
   sinceDate.setDate(sinceDate.getDate() - 30);
   console.log(sinceDate);
   
-  //Create Table:
-  var tableData = createTable("containerTable", wettbewerber, kriterien);
   //Make Table Sortable:
   $("#dashboard").tablesorter();
-  $("#dashboard").trigger("update");
+  //Create Table:
+  var tableData = createTable("containerTable", wettbewerber, kriterien);
 
   //Functions:
   function round(value, precision) {
@@ -88,6 +87,8 @@ $(document).ready(function(){
         }
       };
     };
+    //Update sortable table
+    $("table").trigger("update");
     return tableData;
   }
   

@@ -576,7 +576,7 @@ $(document).ready(function(){
         //Update tableData Object:
         tableData[new_arr_element] = {};
         //Add tr with input field to table
-        var table = document.getElementById("dashboard");
+        var tbody = document.getElementsByTagName("tbody");
         var tr = document.createElement("tr")
         for (x=0; x<kriterien.length; x++){
           var td = document.createElement("td");
@@ -593,7 +593,7 @@ $(document).ready(function(){
           tr.appendChild(td);
           tableData[new_arr_element][kriterien[x]] = td;
         }
-        table.appendChild(tr);
+        tbody.appendChild(tr);
         input.focus();
       }
     }

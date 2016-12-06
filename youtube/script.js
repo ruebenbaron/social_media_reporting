@@ -595,7 +595,7 @@ $(document).ready(function(){
         fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length-1], tableData);
         //Append every td tfoot to new tr:
         var new_tr = document.createElement("tr");
-        new_tr.id = wettbewerber.length-1 + "_new";
+        new_tr.id = wettbewerber.length + "_new";
         for (x=0; x<kriterien.length; x++) {
           var new_td = tableData[new_input][kriterien[x]];
           new_tr.appendChild(new_td);
@@ -608,7 +608,7 @@ $(document).ready(function(){
         var old_tr = document.getElementById(wettbewerber.length)
         old_tr.parentNode.removeChild(old_tr);
         //Correct id of new tr
-        new_tr.id = wettbewerber.length-1
+        new_tr.id = wettbewerber.length
         //Add "new_competitor" to wettbewerber
         var new_arr_element = "new_competitor"
         wettbewerber.push(new_arr_element);
@@ -617,7 +617,7 @@ $(document).ready(function(){
         //Add tr with input field to table
         var tfoot = document.getElementById("tfoot");
         var tr = document.createElement("tr");
-        tr.id = wettbewerber.length-1;
+        tr.id = wettbewerber.length;
         for (x=0; x<kriterien.length; x++){
           var td = document.createElement("td");
           td.id = new_arr_element + "_" + kriterien[x];

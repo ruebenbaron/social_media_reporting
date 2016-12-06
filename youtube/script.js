@@ -605,7 +605,7 @@ $(document).ready(function(){
         var tbody = document.getElementById("tbody");
         tbody.appendChild(new_tr);
         //Delete old tr from tfoot
-        var old_tr = document.getElementById(wettbewerber.length-1)
+        var old_tr = document.getElementById(wettbewerber.length)
         old_tr.parentNode.removeChild(old_tr);
         //Correct id of new tr
         new_tr.id = wettbewerber.length-1

@@ -41,7 +41,7 @@ $(document).ready(function(){
     for (i=0; i<=wettbewerber.length; i++) {
       var tr = document.createElement("tr");
       tr.id = i;
-      if (i=0){
+      if (i==0){
         var thead = document.createElement("thead");
         table.appendChild(thead);
         thead.appendChild(tr);

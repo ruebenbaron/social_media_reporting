@@ -40,6 +40,9 @@ $(document).ready(function(){
     var tbody = document.createElement("tbody");
     tbody.id = "tbody"
     table.appendChild(tbody);
+    var tfoot = document.createElement("tfoot");
+    tfoot.id = "tfoot"
+    table.appendChild(tfoot);
     for (i=0; i<wettbewerber.length; i++) {
       tableData[wettbewerber[i]] = {};
     };
@@ -69,7 +72,7 @@ $(document).ready(function(){
               td.appendChild(input);
             }
             tr.appendChild(td);
-            tbody.appendChild(tr);
+            tfoot.appendChild(tr);
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
@@ -557,7 +560,6 @@ $(document).ready(function(){
   
   //If Enter Press in Input Field of Table:
   $(document).on("keyup", "#competitor_input", function(event){
-  //$("#competitor_input").keyup(function(event){
     if(event.which == 13){
       var new_input = $("#competitor_input").val()
       if (tableData.hasOwnProperty(new_input)){
@@ -597,7 +599,7 @@ $(document).ready(function(){
         //Update tableData Object:
         tableData[new_arr_element] = {};
         //Add tr with input field to table
-        var tbody = document.getElementById("tbody");
+        var tfoot = document.getElementById("tfoot");
         var tr = document.createElement("tr")
         for (x=0; x<kriterien.length; x++){
           var td = document.createElement("td");
@@ -614,7 +616,7 @@ $(document).ready(function(){
           tr.appendChild(td);
           tableData[new_arr_element][kriterien[x]] = td;
         }
-        tbody.appendChild(tr);
+        tfoot.appendChild(tr);
         input.focus();
       }
     }

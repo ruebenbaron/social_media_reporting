@@ -13,9 +13,7 @@ $(document).ready(function(){
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
   //Make Table Sortable:
-  $(function(){
-    $('#dashboard').tablesorter(); 
-  });
+  $("#dashboard").tablesorter();
 
   //Functions:
   function round(value, precision) {
@@ -43,10 +41,12 @@ $(document).ready(function(){
     for (i=0; i<=wettbewerber.length; i++) {
       var tr = document.createElement("tr");
       tr.id = i;
-      table.appendChild(tr);
       for (x=0; x<kriterien.length; x++) {
         switch (i) {
           case 0:
+            var thead = document.createElement("thead");
+            table.appendChild(thead);
+            thead.appendChild(tr);
             var th = document.createElement("th");
             th.id = kriterien[x];
             th.innerHTML = kriterien[x];
@@ -54,6 +54,9 @@ $(document).ready(function(){
             tableData.header[kriterien[x]] = th;
             break;
           case wettbewerber.length:
+            var tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            tbody.appendChild(tr);
             var td = document.createElement("td");
             td.id = wettbewerber[i-1] + "_" + kriterien[x];
             td.className = wettbewerber[i-1] + " " + kriterien[x];
@@ -69,6 +72,9 @@ $(document).ready(function(){
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
+            var tbody = document.createElement("tbody");
+            table.appendChild(tbody);
+            tbody.appendChild(tr);
             var td = document.createElement("td");
             td.id = wettbewerber[i-1] + "_" + kriterien[x];
             td.className = wettbewerber[i-1] + " " + kriterien[x];

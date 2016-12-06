@@ -14,6 +14,7 @@ $(document).ready(function(){
   var tableData = createTable("containerTable", wettbewerber, kriterien);
   //Make Table Sortable:
   $("#dashboard").tablesorter();
+  $("#dashboard").trigger("update");
 
   //Functions:
   function round(value, precision) {

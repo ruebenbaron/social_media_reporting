@@ -26,6 +26,12 @@ $(document).ready(function(){
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
   
+  function updateSortableTable() {
+    $("table").trigger("update");
+    $("table").trigger("appendCache")
+    $("table").trigger("sorton",[ [] ]);
+  }
+  
   function createTable(container_id, wettbewerber, kriterien) {
     var containerTable = document.getElementById(container_id);
     var table = document.createElement("table");
@@ -107,7 +113,7 @@ $(document).ready(function(){
   function fillChannelName(page_name, tableData){
     tableData[page_name].Channel.innerHTML = page_name;
     //Update sortable table
-    $("table").trigger("update");
+    updateSortableTable;
   }
   
   function fillSubscriptions(page_name, tableData){
@@ -116,7 +122,7 @@ $(document).ready(function(){
       sub_count = numberWithCommas(sub_count);
       tableData[page_name].Subscriptions.innerHTML = sub_count;
       //Update sortable table
-      $("table").trigger("update");
+      updateSortableTable;
     }); 
   }
   
@@ -143,7 +149,7 @@ $(document).ready(function(){
         };
         tableData[page_name].Videos_Count.innerHTML = vid_count;
         //Update sortable table
-        $("table").trigger("update");
+        updateSortableTable;
       }); 
     }); 
   }
@@ -207,7 +213,7 @@ $(document).ready(function(){
               //Fill tableData with rounded Average View per Video.
               tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
               //Update sortable table
-              $("table").trigger("update");
+              updateSortableTable;
             };
           });
         };
@@ -250,7 +256,7 @@ $(document).ready(function(){
               //Fill tableData with rounded Average Likes per Video.
               tableData[page_name].Avg_Likes_per_Video.innerHTML = avg_likes_per_video_rounded;
               //Update sortable table
-              $("table").trigger("update");
+              updateSortableTable;
             };
           });
         };
@@ -344,7 +350,7 @@ $(document).ready(function(){
                   view_count_champion = numberWithCommas(view_count_champion);
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
                   //Update sortable table
-                  $("table").trigger("update");
+                  updateSortableTable;
                   //Append Video Player To div#details:
                   appendEmbeddedVideo(video_id, page_name+"_ytapiplayer", page_name+"_details");
                   appendViewCount(view_count_champion, page_name+"_view_count", page_name+"_details")
@@ -407,7 +413,7 @@ $(document).ready(function(){
                   like_count_champion = numberWithCommas(like_count_champion);
                   tableData[page_name].Most_Successful_Video_Likes.innerHTML = like_count_champion;
                   //Update sortable table
-                  $("table").trigger("update");
+                  updateSortableTable;
                 };
               });
             };
@@ -464,7 +470,7 @@ $(document).ready(function(){
                   //Fill tableData with Average Views compared to Subs.
                   tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
                   //Update sortable table
-                  $("table").trigger("update");
+                  updateSortableTable;
                 }
               });
             };
@@ -520,7 +526,7 @@ $(document).ready(function(){
               //Fill tableData with Average Engagement Rate per Video.
               tableData[page_name].Avg_Engagement_Rate_per_Video.innerHTML = avg_engagement_rate_per_video_rounded_perc.toString() + "%";
               //Update sortable table
-              $("table").trigger("update");
+              updateSortableTable;
             };
           });
         };

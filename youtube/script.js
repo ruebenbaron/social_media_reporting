@@ -10,8 +10,6 @@ $(document).ready(function(){
   sinceDate.setDate(sinceDate.getDate() - 30);
   console.log(sinceDate);
   
-  //Make Table Sortable:
-  $("#dashboard").tablesorter();
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
 
@@ -24,12 +22,6 @@ $(document).ready(function(){
   
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-  }
-  
-  function updateSortableTable() {
-    $("table").trigger("update");
-    $("table").trigger("appendCache")
-    $("table").trigger("sorton",[ [] ]);
   }
   
   function createTable(container_id, wettbewerber, kriterien) {
@@ -112,8 +104,6 @@ $(document).ready(function(){
   
   function fillChannelName(page_name, tableData){
     tableData[page_name].Channel.innerHTML = page_name;
-    //Update sortable table
-    updateSortableTable;
   }
   
   function fillSubscriptions(page_name, tableData){
@@ -121,8 +111,6 @@ $(document).ready(function(){
       var sub_count = response.items[0].statistics.subscriberCount;
       sub_count = numberWithCommas(sub_count);
       tableData[page_name].Subscriptions.innerHTML = sub_count;
-      //Update sortable table
-      updateSortableTable;
     }); 
   }
   
@@ -148,8 +136,6 @@ $(document).ready(function(){
           };
         };
         tableData[page_name].Videos_Count.innerHTML = vid_count;
-        //Update sortable table
-        updateSortableTable;
       }); 
     }); 
   }
@@ -212,8 +198,6 @@ $(document).ready(function(){
               avg_views_per_video_rounded = numberWithCommas(avg_views_per_video_rounded);
               //Fill tableData with rounded Average View per Video.
               tableData[page_name].Avg_Views_per_Video.innerHTML = avg_views_per_video_rounded;
-              //Update sortable table
-              updateSortableTable;
             };
           });
         };
@@ -255,8 +239,6 @@ $(document).ready(function(){
               avg_likes_per_video_rounded = numberWithCommas(avg_likes_per_video_rounded);
               //Fill tableData with rounded Average Likes per Video.
               tableData[page_name].Avg_Likes_per_Video.innerHTML = avg_likes_per_video_rounded;
-              //Update sortable table
-              updateSortableTable;
             };
           });
         };
@@ -349,8 +331,6 @@ $(document).ready(function(){
                   //Fill tableData with Most Successful Video Views:
                   view_count_champion = numberWithCommas(view_count_champion);
                   tableData[page_name].Most_Successful_Video_Views.innerHTML = view_count_champion;
-                  //Update sortable table
-                  updateSortableTable;
                   //Append Video Player To div#details:
                   appendEmbeddedVideo(video_id, page_name+"_ytapiplayer", page_name+"_details");
                   appendViewCount(view_count_champion, page_name+"_view_count", page_name+"_details")
@@ -412,8 +392,6 @@ $(document).ready(function(){
                   //Fill tableData with Most Successful Video Views:
                   like_count_champion = numberWithCommas(like_count_champion);
                   tableData[page_name].Most_Successful_Video_Likes.innerHTML = like_count_champion;
-                  //Update sortable table
-                  updateSortableTable;
                 };
               });
             };
@@ -469,8 +447,6 @@ $(document).ready(function(){
                   var avg_views_compared_subs_rounded_perc = round(avg_views_compared_subs*100, 1);
                   //Fill tableData with Average Views compared to Subs.
                   tableData[page_name].Avg_Views_compared_to_Subs.innerHTML = avg_views_compared_subs_rounded_perc.toString() + "%";
-                  //Update sortable table
-                  updateSortableTable;
                 }
               });
             };
@@ -525,8 +501,6 @@ $(document).ready(function(){
               var avg_engagement_rate_per_video_rounded_perc = round(avg_engagement_rate_per_video*100, 3);
               //Fill tableData with Average Engagement Rate per Video.
               tableData[page_name].Avg_Engagement_Rate_per_Video.innerHTML = avg_engagement_rate_per_video_rounded_perc.toString() + "%";
-              //Update sortable table
-              updateSortableTable;
             };
           });
         };

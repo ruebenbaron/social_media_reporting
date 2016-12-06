@@ -12,6 +12,10 @@ $(document).ready(function(){
   
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
+  //Make Table Sortable:
+  $(function(){
+    $('#keywords').tablesorter(); 
+  });
 
   //Functions:
   function round(value, precision) {

@@ -35,21 +35,17 @@ $(document).ready(function(){
     containerTable.appendChild(table);
     var tableData = {};
     tableData.header = {};
+    //Append thead and tbody:
+    var thead = document.createElement("thead");
+    table.appendChild(thead);
+    var tbody = document.createElement("tbody");
+    table.appendChild(tbody);
     for (i=0; i<wettbewerber.length; i++) {
       tableData[wettbewerber[i]] = {};
     };
     for (i=0; i<=wettbewerber.length; i++) {
       var tr = document.createElement("tr");
       tr.id = i;
-      if (i==0){
-        var thead = document.createElement("thead");
-        table.appendChild(thead);
-        thead.appendChild(tr);
-      } else {
-        var tbody = document.createElement("tbody");
-        table.appendChild(tbody);
-        tbody.appendChild(tr);
-      }
       for (x=0; x<kriterien.length; x++) {
         switch (i) {
           case 0:
@@ -58,6 +54,7 @@ $(document).ready(function(){
             th.innerHTML = kriterien[x];
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
+            thead.appendChild(tr);
             break;
           case wettbewerber.length:
             var td = document.createElement("td");
@@ -72,6 +69,7 @@ $(document).ready(function(){
               td.appendChild(input);
             }
             tr.appendChild(td);
+            tbody.appendChild(tr);
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
@@ -83,6 +81,7 @@ $(document).ready(function(){
             }
             //td.innerHTML = wettbewerber[i-1] + " " + kriterien[x];
             tr.appendChild(td);
+            tbody.appendChild(tr);
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
         }

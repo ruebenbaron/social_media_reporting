@@ -31,10 +31,20 @@ $(document).ready(function(){
     var table = document.createElement("table");
     table.id = "dashboard";
     table.className = "table";
-    table.className += " table-striped table-hover";
+    table.className += " table-striped table-hover sortable";
     containerTable.appendChild(table);
     var tableData = {};
     tableData.header = {};
+    //Append thead and tbody and tfoot:
+    var thead = document.createElement("thead");
+    thead.id = "thead";
+    table.appendChild(thead);
+    var tbody = document.createElement("tbody");
+    tbody.id = "tbody"
+    table.appendChild(tbody);
+    var tfoot = document.createElement("tfoot");
+    tfoot.id = "tfoot"
+    table.appendChild(tfoot);
     for (i=0; i<wettbewerber.length; i++) {
       tableData[wettbewerber[i]] = {};
     };
@@ -50,6 +60,7 @@ $(document).ready(function(){
             th.innerHTML = kriterien[x];
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
+            thead.appendChild(tr);
             break;
           case wettbewerber.length:
             var td = document.createElement("td");
@@ -64,6 +75,7 @@ $(document).ready(function(){
               td.appendChild(input);
             }
             tr.appendChild(td);
+            tfoot.appendChild(tr);
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
@@ -75,11 +87,13 @@ $(document).ready(function(){
             }
             //td.innerHTML = wettbewerber[i-1] + " " + kriterien[x];
             tr.appendChild(td);
+            tbody.appendChild(tr);
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
         }
       };
     };
+    sorttable.makeSortable(table);
     return tableData;
   }
   
@@ -181,6 +195,8 @@ $(document).ready(function(){
   
   function fillPage(page_name, tableData){
     tableData[page_name].Page.innerHTML = page_name;
+    var table = document.getElementById("dashboard");
+    sorttable.makeSortable(table);
   }
   
   function fillFanCount(page_name, tableData){
@@ -191,6 +207,8 @@ $(document).ready(function(){
       function(response) {
         var fan_count = response.fan_count;
         tableData[page_name].Fans.innerHTML = numberWithCommas(fan_count);
+        var table = document.getElementById("dashboard");
+        sorttable.makeSortable(table);
       }
     );
   }
@@ -203,6 +221,8 @@ $(document).ready(function(){
       function(response) {
         var posts_count = response.data.length;
         tableData[page_name].Posts_Count.innerHTML = numberWithCommas(posts_count);
+        var table = document.getElementById("dashboard");
+        sorttable.makeSortable(table);
       }
     );
   }
@@ -231,6 +251,8 @@ $(document).ready(function(){
         };
         //Fill Table:
         tableData[page_name].Most_Successful_Post_Likes.innerHTML = numberWithCommas(likes_count_champion);
+        var table = document.getElementById("dashboard");
+        sorttable.makeSortable(table);
       }
     );
   }
@@ -257,6 +279,8 @@ $(document).ready(function(){
         var rounded_avg_likes = round(avg_likes, 1);
         var rounded_avg_likes_with_commas = numberWithCommas(rounded_avg_likes);
         tableData[page_name].Avg_Likes_per_Post.innerHTML = rounded_avg_likes_with_commas;
+        var table = document.getElementById("dashboard");
+        sorttable.makeSortable(table);
       }
     );
   }
@@ -294,6 +318,8 @@ $(document).ready(function(){
             var avg_engagement_rate = avg_engagement_per_post/fan_count;
             var avg_engagement_rate_rounded_perc = round(avg_engagement_rate*100, 3);
             tableData[page_name].Avg_Engagement_Rate_per_Post.innerHTML = avg_engagement_rate_rounded_perc.toString() + "%";
+            var table = document.getElementById("dashboard");
+            sorttable.makeSortable(table);
           }
         );
       }
@@ -357,7 +383,7 @@ $(document).ready(function(){
                   if (tableData.hasOwnProperty(new_input)){
                     //If User enters existing Channel Name:
                     $("#competitor_input").blur();
-                    alert("Dieser Channel ist in der Tabelle bereits enthalten.");
+                    alert("Diese Page ist in der Tabelle bereits enthalten.");
                   } else {
                     //If User enters new Channel Name:
                     //Change td.ids to last wettbewerber
@@ -386,14 +412,31 @@ $(document).ready(function(){
                     fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+                    //Append every td tfoot to new tr:
+                    var new_tr = document.createElement("tr");
+                    new_tr.id = wettbewerber.length + "_new";
+                    for (x=0; x<kriterien.length; x++) {
+                      var new_td = tableData[new_input][kriterien[x]];
+                      new_tr.appendChild(new_td);
+                      tableData[new_input][kriterien[x]] = new_td;
+                    }
+                    //Append new tr to tbody
+                    var tbody = document.getElementById("tbody");
+                    tbody.appendChild(new_tr);
+                    //Delete old tr from tfoot
+                    var old_tr = document.getElementById(wettbewerber.length)
+                    old_tr.parentNode.removeChild(old_tr);
+                    //Correct id of new tr
+                    new_tr.id = wettbewerber.length
                     //Add "new_competitor" to wettbewerber
                     var new_arr_element = "new_competitor"
                     wettbewerber.push(new_arr_element);
                     //Update tableData Object:
                     tableData[new_arr_element] = {};
                     //Add tr with input field to table
-                    var table = document.getElementById("dashboard");
+                    var tfoot = document.getElementById("tfoot");
                     var tr = document.createElement("tr")
+                    tr.id = wettbewerber.length;
                     for (x=0; x<kriterien.length; x++){
                       var td = document.createElement("td");
                       td.id = new_arr_element + "_" + kriterien[x];
@@ -409,7 +452,7 @@ $(document).ready(function(){
                       tr.appendChild(td);
                       tableData[new_arr_element][kriterien[x]] = td;
                     }
-                    table.appendChild(tr);
+                    tfoot.appendChild(tr);
                     input.focus();
                   }
                 }

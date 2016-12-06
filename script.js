@@ -400,7 +400,7 @@ $(document).ready(function(){
                     //Correct tableData Object:
                     tableData[new_input] = tableData["new_competitor"];
                     delete tableData["new_competitor"]
-                    //Call YouTube Functions for last wettbewerber
+                    //Call Facebook Functions for last wettbewerber
                     createPageDiv(wettbewerber[wettbewerber.length-1]);
                     appendHeader(wettbewerber[wettbewerber.length-1], wettbewerber[wettbewerber.length-1]);
                     appendFanCount(wettbewerber[wettbewerber.length-1]);
@@ -412,6 +412,8 @@ $(document).ready(function(){
                     fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
+                    //Parse FB Elements again
+                    FB.XFBML.parse();
                     //Append every td tfoot to new tr:
                     var new_tr = document.createElement("tr");
                     new_tr.id = wettbewerber.length + "_new";

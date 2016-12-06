@@ -12,6 +12,11 @@ $(document).ready(function(){
   
   //Create Table:
   var tableData = createTable("containerTable", wettbewerber, kriterien);
+  
+  //Table Objects:
+  var objTHEAD = {};
+  var objTBODY = {};
+  var objTFOOT = {};
 
   //Functions:
   function round(value, precision) {
@@ -58,6 +63,7 @@ $(document).ready(function(){
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
             thead.appendChild(tr);
+            objTHEAD[tr.id] = tr;
             break;
           case wettbewerber.length:
             var td = document.createElement("td");
@@ -73,6 +79,7 @@ $(document).ready(function(){
             }
             tr.appendChild(td);
             tfoot.appendChild(tr);
+            objTFOOT[tr.id] = tr;
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
           default:
@@ -85,6 +92,7 @@ $(document).ready(function(){
             //td.innerHTML = wettbewerber[i-1] + " " + kriterien[x];
             tr.appendChild(td);
             tbody.appendChild(tr);
+            objTBODY[tr.id] = tr;
             tableData[wettbewerber[i-1]][kriterien[x]] = td;
             break;
         }
@@ -593,6 +601,23 @@ $(document).ready(function(){
         fillMost_Successful_Video_Likes(wettbewerber[wettbewerber.length-1], tableData);
         fillAvg_Views_compared_to_Subs(wettbewerber[wettbewerber.length-1], tableData);
         fillAvg_Engagement_Rate_per_Video(wettbewerber[wettbewerber.length-1], tableData);
+        //Append every td tfoot to new tr:
+        var new_tr = document.createElement("tr");
+        new_tr.id = wettbewerber.length-1 + "_new";
+        for (x=0; x<kriterien.length; x++) {
+          var new_td = tableData[new_input][kriterien[x]];
+          new_tr.appendChild(new_td);
+          tableData[new_input][kriterien[x]] = new_td;
+        }
+        //Append new tr to tbody
+        var tbody = document.getElementById("tbody");
+        tbody.appendChild(new_tr);
+        objTBODY[new_tr.id] = new_tr;
+        //Delete old tr from tfoot
+        var old_tr = document.getElementById(wettbewerber.length-1)
+        old_tr.parentNode.removeChild(old_tr);
+        //Correct id of new tr
+        new_tr.id = wettbewerber.length-1
         //Add "new_competitor" to wettbewerber
         var new_arr_element = "new_competitor"
         wettbewerber.push(new_arr_element);
@@ -600,7 +625,8 @@ $(document).ready(function(){
         tableData[new_arr_element] = {};
         //Add tr with input field to table
         var tfoot = document.getElementById("tfoot");
-        var tr = document.createElement("tr")
+        var tr = document.createElement("tr");
+        tr.id = wettbewerber.length-1;
         for (x=0; x<kriterien.length; x++){
           var td = document.createElement("td");
           td.id = new_arr_element + "_" + kriterien[x];

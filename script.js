@@ -152,7 +152,7 @@ $(document).ready(function(){
     divPost.setAttribute("data-href", post_permalink_url);
     divPage.appendChild(divPost);
     //Parse FB Elements again
-    FB.XFBML.parse();
+    FB.XFBML.parse(divPost);
   }
 
   function appendPostInfo(page_name, post_id) {

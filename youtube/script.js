@@ -35,8 +35,10 @@ $(document).ready(function(){
     tableData.header = {};
     //Append thead and tbody:
     var thead = document.createElement("thead");
+    thead.id = "thead";
     table.appendChild(thead);
     var tbody = document.createElement("tbody");
+    tbody.id = "tbody"
     table.appendChild(tbody);
     for (i=0; i<wettbewerber.length; i++) {
       tableData[wettbewerber[i]] = {};
@@ -576,7 +578,7 @@ $(document).ready(function(){
         //Update tableData Object:
         tableData[new_arr_element] = {};
         //Add tr with input field to table
-        var tbody = document.getElementsByTagName("tbody");
+        var tbody = document.getElementById("tbody");
         var tr = document.createElement("tr")
         for (x=0; x<kriterien.length; x++){
           var td = document.createElement("td");

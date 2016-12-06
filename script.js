@@ -151,6 +151,8 @@ $(document).ready(function(){
     divPost.id = post_id;
     divPost.setAttribute("data-href", post_permalink_url);
     divPage.appendChild(divPost);
+    //Parse FB Elements again
+    FB.XFBML.parse();
   }
 
   function appendPostInfo(page_name, post_id) {
@@ -344,7 +346,6 @@ $(document).ready(function(){
       divDetails.toggle();
       if(divDetails.is(":visible")){
         btnDetails.text("Hide Details");
-        FB.XFBML.parse();
       } else {
         btnDetails.text("Show Details");
       }
@@ -412,8 +413,6 @@ $(document).ready(function(){
                     fillMost_Successful_Post_Likes(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Likes_per_Post(wettbewerber[wettbewerber.length-1], tableData);
                     fillAvg_Engagement_Rate_per_Post(wettbewerber[wettbewerber.length-1], tableData);
-                    //Parse FB Elements again
-                    FB.XFBML.parse();
                     //Append every td tfoot to new tr:
                     var new_tr = document.createElement("tr");
                     new_tr.id = wettbewerber.length + "_new";

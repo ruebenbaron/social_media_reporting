@@ -45,16 +45,16 @@ input {
 	font-family: arial, sans-serif;
 }
 
-tr:last-child td {
+td input {
 	margin: 0;
 }
 
-tbody tr:nth-child(1n+2):hover {
+tbody tr:nth-child(n):hover {
   background-color: #cc181e;
   color: #fff;
 }
 
-tbody tr:nth-child(1) td {
+.vwfsde {
   background-color: #E62117;
   color: #fff;
 }

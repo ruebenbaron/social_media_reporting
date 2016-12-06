@@ -49,7 +49,7 @@ tr:last-child td {
 	margin: 0;
 }
 
-tbody tr:nth-child(1n+3):hover {
+tbody tr:nth-child(1n+2):hover {
   background-color: #cc181e;
   color: #fff;
 }

@@ -14,7 +14,7 @@ $(document).ready(function(){
   var tableData = createTable("containerTable", wettbewerber, kriterien);
   //Make Table Sortable:
   $(function(){
-    $('#keywords').tablesorter(); 
+    $('#dashboard').tablesorter(); 
   });
 
   //Functions:

@@ -57,7 +57,24 @@ $(document).ready(function(){
           case 0:
             var th = document.createElement("th");
             th.id = kriterien[x];
-            th.innerHTML = kriterien[x];
+            //Change th names that are shown to make display more pleasing:
+            switch (x) {
+              case 2:
+                th.innerHTML = "Posts";
+                break;
+              case 3:
+                th.innerHTML = "&Oslash; Likes";
+                break;
+              case 4:
+                th.innerHTML = "Top Likes";
+                break;
+              case 5:
+                th.innerHTML = "Engagement Rate";
+                break;
+              default:
+                th.innerHTML = kriterien[x];
+                break;
+            }
             tr.appendChild(th);
             tableData.header[kriterien[x]] = th;
             thead.appendChild(tr);

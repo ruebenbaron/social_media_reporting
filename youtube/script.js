@@ -142,11 +142,16 @@ $(document).ready(function(){
   
   function fillSubscriptions(page_name, tableData){
     jQuery.getJSON("https://www.googleapis.com/youtube/v3/channels?part=statistics&forUsername="+page_name+"&key="+key, function(response) {
-      var sub_count = response.items[0].statistics.subscriberCount;
-      sub_count = numberWithCommas(sub_count);
-      tableData[page_name].Subscriptions.innerHTML = sub_count;
-      var table = document.getElementById("dashboard");
-      sorttable.makeSortable(table);
+      //Check if Channel exists:
+      if (response.items.length == 0) {
+        tableData[page_name].Subscriptions.innerHTML = "Channel not found.";
+      } else {
+        var sub_count = response.items[0].statistics.subscriberCount;
+        sub_count = numberWithCommas(sub_count);
+        tableData[page_name].Subscriptions.innerHTML = sub_count;
+        var table = document.getElementById("dashboard");
+        sorttable.makeSortable(table);
+      }
     }); 
   }
   

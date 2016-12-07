@@ -77,7 +77,7 @@ $(document).ready(function(){
               case 8:
                 th.innerHTML = "Engagement Rate";
                 break;
-              case default:
+              default:
                 th.innerHTML = kriterien[x];
                 break;
             }

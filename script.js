@@ -89,6 +89,7 @@ $(document).ready(function(){
               var input = document.createElement("input");
               input.id = "competitor_input";
               input.setAttribute("type", "text");
+              input.setAttribute("placeholder", "+ Add Page");
               td.appendChild(input);
             }
             tr.appendChild(td);
@@ -224,10 +225,16 @@ $(document).ready(function(){
       'GET',
       {"fields":"fan_count", "access_token":access_token},
       function(response) {
-        var fan_count = response.fan_count;
-        tableData[page_name].Fans.innerHTML = numberWithCommas(fan_count);
-        var table = document.getElementById("dashboard");
-        sorttable.makeSortable(table);
+        if (response.hasOwnProperty("error")) {
+          //If Page Not Found:
+          tableData[page_name].Fans.innerHTML = "Page not found.";
+        } else {
+          var fan_count = response.fan_count;
+          tableData[page_name].Fans.innerHTML = numberWithCommas(fan_count);
+          var table = document.getElementById("dashboard");
+          sorttable.makeSortable(table);
+        }
+        
       }
     );
   }
@@ -465,6 +472,7 @@ $(document).ready(function(){
                         var input = document.createElement("input");
                         input.id = "competitor_input";
                         input.setAttribute("type", "text");
+                        input.setAttribute("placeholder", "+ Add Page");
                         td.appendChild(input);
                       }
                       tr.appendChild(td);

@@ -95,6 +95,7 @@ $(document).ready(function(){
               var input = document.createElement("input");
               input.id = "competitor_input";
               input.setAttribute("type", "text");
+              input.setAttribute("placeholder", "+ Add Channel");
               td.appendChild(input);
             }
             tr.appendChild(td);
@@ -659,6 +660,7 @@ $(document).ready(function(){
             var input = document.createElement("input");
             input.id = "competitor_input";
             input.setAttribute("type", "text");
+            input.setAttribute("placeholder", "+ Add Channel");
             td.appendChild(input);
           }
           tr.appendChild(td);
